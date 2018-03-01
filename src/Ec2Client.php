@@ -30,17 +30,23 @@ class Ec2Client
     
     
     /**
-     * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#createimage
+     * Creates an Amazon EBS-backed AMI from an Amazon EBS-backed instance that is either running 
+     * or stopped. If you customized your instance with instance store volumes or EBS volumes 
+     * in addition to the root device volume, the new AMI contains block device mapping 
+     * information for those volumes. When you launch an instance from this new AMI, the 
+     * instance automatically launches with those additional volumes.
+     * https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2016-11-15.html#createimage
      */
-    public function createImage()
+    public function createImage(Objects\Ec2Instance $instance, string $imageName, string $description, bool $noReboot)
     {
+        $request = new Requests\RequestCreateImage(
+            $instance, 
+            $imageName, 
+            $description, 
+            $noReboot
+        );
         
-    }
-    
-    
-    public function createKeyPair()
-    {
-        
+        return $request->send($this->m_client);
     }
     
     
@@ -82,6 +88,29 @@ class Ec2Client
     public function runInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request)
     {
         return $request->send($this->m_client);        
+    }
+    
+    
+    /**
+     * Alias for runInstances() 
+     * Launch some on demand instances (fixed price).
+     * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
+     * @return type
+     */
+    public function deployInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request)
+    {
+        return $this->runInstances($request);
+    }
+    
+    /**
+     * Alias for runInstances() 
+     * Launch some on demand instances (fixed price).
+     * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
+     * @return type
+     */
+    public function launchInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request)
+    {
+        return $this->runInstances($request);
     }
     
     
