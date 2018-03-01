@@ -9,9 +9,32 @@
 require_once(__DIR__ . '/vendor/autoload.php');
 require_once(__DIR__ . '/Settings.php');
 
-$apiKey = API_KEY;
-$secret = API_SECRET;
-$region = \iRAP\Ec2Wrapper\Enums\AwsRegion::create_EU_W1();
+$classDirs = array(
+    __DIR__, 
+    __DIR__ . '/tests',
+    __DIR__ . '/libs',
+);
 
-#$awsWrapper = new iRAP\Ec2Wrapper\AwsWrapper($apiKey, $secret, $region);
-#$ec2Client = $awsWrapper->getEc2Client();
+new \iRAP\Autoloader\Autoloader($classDirs);
+
+$ec2Client = new iRAP\Ec2Wrapper\Ec2Client(
+    API_KEY, 
+    API_SECRET, 
+    \iRAP\Ec2Wrapper\Enums\AwsRegion::create_EU_W1()
+);
+
+$tests = iRAP\CoreLibs\Filesystem::getDirContents(
+    $dir=__DIR__ . '/tests', 
+    $recursive=true, 
+    $includePath=false, 
+    $onlyFiles=true
+);
+
+foreach ($tests as $testFilename)
+{
+    $testName = substr($testFilename, 0, -4);
+    
+    /* @var $testToRun AbstractTest */
+    $testToRun = new $testName();
+    $testToRun->run($ec2Client);
+}
