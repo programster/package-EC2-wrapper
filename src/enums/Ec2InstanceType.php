@@ -31,21 +31,26 @@ class Ec2InstanceType
      * @param int $size - int between 1 and 4 with 1 being the smallest size for t2.micro.
      * @return Ec2InstanceType
      */
-    public static function createT2($size)
+    public static function createT2(int $size)
     {
-        $size = \iRAP\CoreLibs\Core::clampValue($size, 4, 1);
+        if ($size > 7 || $size < 1)
+        {
+            throw new \Exception("Invalid size specified.");
+        }
         
         $sizeMap = array(
-            1 => 't2.micro',
-            2 => 't2.small',
-            3 => 't2.medium',
-            4 => 't2.large'
+            1 => 't2.nano',
+            2 => 't2.micro',
+            3 => 't2.small',
+            4 => 't2.medium',
+            5 => 't2.large',
+            6 => 't2.xlarge',
+            7 => 't2.2xlarge',
         );
         
         $ec2InstanceType = $sizeMap[$size];
         return new Ec2InstanceType($ec2InstanceType);
     }
-    
     
     
     /**
