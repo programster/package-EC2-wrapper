@@ -1,5 +1,5 @@
 {
-    "name": "irap/aws-wrapper",
+    "name": "irap/ec2-wrapper",
     "type": "library",
     "description": "Package for making it easier to work with AWS EC2.",
     "keywords": ["AWS","EC2"],
@@ -15,17 +15,16 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "irap/core-libs": "1.1.*",
         "aws/aws-sdk-php" : "3.52.*",
         "ext-libxml" : "*",
         "ext-simplexml" : "*"
     },
     "autoload": {
         "psr-4": {
-            "iRAP\\AwsWrapper\\": "src/",
-            "iRAP\\AwsWrapper\\Enums\\": "src/enums/",
-            "iRAP\\AwsWrapper\\Objects\\": "src/objects/",
-            "iRAP\\AwsWrapper\\Requests\\": "src/requests/"
+            "iRAP\\Ec2Wrapper\\": "src/",
+            "iRAP\\Ec2Wrapper\\Enums\\": "src/enums/",
+            "iRAP\\Ec2Wrapper\\Objects\\": "src/objects/",
+            "iRAP\\Ec2Wrapper\\Requests\\": "src/requests/"
         }
     }
 }
