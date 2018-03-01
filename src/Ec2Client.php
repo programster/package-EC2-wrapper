@@ -39,6 +39,18 @@ class Ec2Client
      */
     public function createImage(string $instanceID, string $imageName, string $description, bool $noReboot) : Responses\CreateImageResponse
     {
+        if (strlen($imageName) > 128)
+        {
+            throw new Exception("{$imageName} is too long for the name of an image.");
+        }
+        
+        if (strlen($imageName) < 3)
+        {
+            throw new Exception("{$imageName} is too short for the name of an image.");
+        }
+        
+        /* @todo validate $imagename. Can only contain letters, numbers, and the following special chars ( ) . - / and _ */
+        
         $request = new Requests\RequestCreateImage(
             $instanceID, 
             $imageName, 
