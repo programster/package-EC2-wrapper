@@ -13,6 +13,7 @@ class DescribeInstancesResponse extends AbstractResponse
     
     public function __construct($rawAmazonResponse)
     {
+        parent::__construct();
         $reservations = $rawAmazonResponse->get('Reservations');
         
         foreach ($reservations as $reservation)
@@ -21,7 +22,7 @@ class DescribeInstancesResponse extends AbstractResponse
             
             foreach ($instances as $instanceSetItem)
             {
-                $ec2Instance = \iRAP\Ec2Wrapper\Ec2\Ec2Instance::createFromAwsItem($instanceSetItem);
+                $ec2Instance = \iRAP\Ec2Wrapper\Objects\Ec2Instance::createFromAwsItem($instanceSetItem);
                 $this->m_instances[] = $ec2Instance;
             }
         }

@@ -13,12 +13,13 @@ class TerminateInstanceResponse extends AbstractResponse
     
     public function __construct($rawAmazonResponse)
     {
+        parent::__construct();
         /* @var $rawAmazonResponse \Aws\Result */
         $ec2InstanceStdObjs = $rawAmazonResponse->get('TerminatingInstances');
         
         foreach ($ec2InstanceStdObjs as $ec2StdObj)
         {
-            $this->m_instances[] = $ec2StdObj->get('InstanceId');
+            $this->m_instances[] = $ec2StdObj['InstanceId'];
         }
         
         return $rawAmazonResponse;
@@ -165,3 +166,5 @@ object(Aws\Result)#123 (1) {
     }
   }
 }
+ * 
+ */

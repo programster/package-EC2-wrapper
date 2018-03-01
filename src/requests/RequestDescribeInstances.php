@@ -10,11 +10,7 @@ namespace iRAP\Ec2Wrapper\Requests;
 
 class RequestDescribeInstances extends AbstractEc2Request
 {
-    private $m_region; 
     private $m_filters = null;
-    private $m_instance_ids = array();
-    private $m_instances = array(); # array for holding returned instances.
-    private $m_returned_instance_ids = array();
     
     
     /**
@@ -24,10 +20,8 @@ class RequestDescribeInstances extends AbstractEc2Request
      * @param Array $instance_ids - optionally specify an array of instance ids to describe
      * @return RequestDescribeInstances
      */
-    public function __construct(\iRAP\Ec2Wrapper\Enums\AwsRegion $region, array $instance_ids=array())
+    public function __construct(array $instance_ids=array())
     {
-        $this->m_region = $region;
-        
         if (is_array($instance_ids))
         {
             $this->m_instance_ids = $instance_ids;
@@ -72,7 +66,7 @@ class RequestDescribeInstances extends AbstractEc2Request
      * use this method at least once, then all instances will be considered.
      * @param String $instanceId - the ID of an instance we wish to have described.
      */
-    public function add_instance_id($instanceId)
+    public function addInstanceID($instanceId)
     {
         $this->m_instance_ids[] = $instanceId;
     }
@@ -87,22 +81,5 @@ class RequestDescribeInstances extends AbstractEc2Request
     {
         $this->m_filters = $filter;
     }
-    
-    
-    /**
-     * Returns the instances that were fetched with this request. Note that this will always be
-     * empty until send has been called at least once. Note that multiple calls to send will 
-     * result in a "stacking" of results.
-     * @param void
-     * @return Array - array list of instances.
-     */
-    public function get_instances() { return $this->m_instances; }
-    
-    
-    /**
-     * Fetch just the array list of instance ids that hare being described.
-     * @return Array<String> - list of instance ids being described.
-     */
-    public function getInstanceIds() { return $this->m_returned_instance_ids; }
 }
 

@@ -66,7 +66,7 @@ class Ec2Instance
         $ec2Instance->m_dns_name                    = $item['PublicDnsName'];
         $ec2Instance->m_state_transition_reason     = $item['StateTransitionReason']; #unknown object
         $ec2Instance->m_ami_launch_index            = intval($item['AmiLaunchIndex']);
-
+        
         
         $ec2Instance->m_product_codes               = $item['ProductCodes']; # array of something (empty in example given)
         $ec2Instance->m_instance_type               = $item['InstanceType']; // e.g. "t2.micro"
@@ -126,6 +126,18 @@ class Ec2Instance
         $ec2Instance->m_ip_address                  = @$item['ipAddress'];
         
         return $ec2Instance;
+    }
+    
+    
+    /**
+     * Terminate the instance
+     * @param \iRAP\Ec2Wrapper\Ec2Client $client
+     * @return \iRAP\Ec2Wrapper\Responses\TerminateInstanceResponse
+     */
+    public function terminate(\iRAP\Ec2Wrapper\Ec2Client $client) : \iRAP\Ec2Wrapper\Responses\TerminateInstanceResponse
+    {
+        $terminationRequest = new \iRAP\Ec2Wrapper\Requests\RequestTerminateInstance($this->getInstanceId());
+        return $client->terminateInstances($terminationRequest);
     }
     
     

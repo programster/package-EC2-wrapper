@@ -24,6 +24,7 @@ class LaunchSpecification
     private $m_userData = null; # optional string of user data
     private $m_monitoringEnabled = false;
     private $m_iamProfile = array(); # optional array of IamInstanceProfile objects
+    private $m_tagSpecifications = array();
     
     
     /**
@@ -32,12 +33,31 @@ class LaunchSpecification
      * can be defined through the public methods, such as addNetworkInterface().
      * @param Ec2InstanceType $instanceType - the type of instance (size) to launch
      * @param String $imageId - the ID of the image we are going to launch
+     * @param string $instanceName - optionally specify a name for the instance(s)
      */
-    public function __construct(\iRAP\Ec2Wrapper\Enums\Ec2InstanceType $instanceType, $imageId)
+    public function __construct(\iRAP\Ec2Wrapper\Enums\Ec2InstanceType $instanceType, $imageId, $instanceName="")
     {
         self::validateImageId($imageId);
         $this->m_instanceType = $instanceType;
         $this->m_image_id = $imageId;
+        
+        if ($instanceName !== "")
+        {
+            $nameTag = new Tag("Name", $instanceName);
+            
+            $tagSpecification = new TagSpecification(
+                \iRAP\Ec2Wrapper\Enums\ResourceType::createInstance(), 
+                $nameTag
+            );
+            
+            $this->m_tagSpecifications[] = $tagSpecification;
+        }
+    }
+    
+    
+    public function addTagSpecification(TagSpecification $spec)
+    {
+        $this->m_tagSpecifications[] = $spec;
     }
     
     
@@ -268,6 +288,19 @@ class LaunchSpecification
             $arrayForm['IamInstanceProfile'] = $iamProfiles;
         }
         
+        if (count($this->m_tagSpecifications) > 0)
+        {
+            $tagSpecificationsArray = array();
+            
+            foreach ($this->m_tagSpecifications as $spec)
+            {
+                /* @var $profile IamInstanceProfile */
+                $tagSpecificationsArray[] = $spec->toArray();
+            }
+            
+            $arrayForm['TagSpecifications'] = $tagSpecificationsArray;
+        }
+        
         if (isset($this->m_ebsOptimized) && $this->m_ebsOptimized == true)
         {
             $arrayForm['EbsOptimized'] = $this->m_ebsOptimized;
@@ -279,13 +312,13 @@ class LaunchSpecification
     
     private static function validateImageId($imageId)
     {
-        print "validateImageId to be implemented." . PHP_EOL;
+        /* @todo */
     }
     
     
     private static function validateSecurityGroup($securityGroup)
     {
-        print "security Group validation has yet to be implemented" . PHP_EOL;
+        /* @todo */
     }
     
     

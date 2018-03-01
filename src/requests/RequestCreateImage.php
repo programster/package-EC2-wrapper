@@ -73,7 +73,15 @@ class RequestCreateImage extends AbstractEc2Request
     
     protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
     {
-        $rawResponse = $ec2->createImage($opt);
+        try
+        {
+            $rawResponse = $ec2->createImage($opt);
+        } 
+        catch (\Aws\Ec2\Exception\Ec2Exception $ex) 
+        {
+            return \iRAP\Ec2Wrapper\Responses\CreateImageResponse::createFromException($ex);
+        }
+        
         return new \iRAP\Ec2Wrapper\Responses\CreateImageResponse($rawResponse);
     }
 }
