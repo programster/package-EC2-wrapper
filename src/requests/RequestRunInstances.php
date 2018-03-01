@@ -120,7 +120,6 @@ class RequestRunInstances extends Ec2RequestAbstract
             $options['ClientToken'] = $this->m_clientToken;
         }
         
-        
         return $options;
     }
     
