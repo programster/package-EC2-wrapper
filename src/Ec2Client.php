@@ -21,7 +21,7 @@ class Ec2Client
         
         $params = array(
             'credentials' => $credentials,
-            'version'     => '2015-04-15',
+            'version'     => '2016-11-15',
             'region'      => (string) $region,
         );
         
