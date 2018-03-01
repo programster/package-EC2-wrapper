@@ -8,7 +8,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#runinstances
  */
 
-class RequestRunInstances extends Ec2RequestAbstract
+class RequestRunInstances extends AbstractEc2Request
 {
     private $m_maxCount;
     private $m_minCount;
@@ -129,18 +129,10 @@ class RequestRunInstances extends Ec2RequestAbstract
      * @param \Aws\Ec2\Ec2Client $ec2Client - the ec2 client (from sdk) that actaully makes the requst
      * @param array $options - the optional array to put into the request generated from this object.
      */
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2Client, array $options) 
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2Client, array $options) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
     {
         $response = $ec2Client->runInstances($options);
-        /* @var $response \Aws\Result */
-        $ec2InstanceStdObjs = $response->get('Instances');
-        
-        foreach ($ec2InstanceStdObjs as $ec2StdObj)
-        {
-            $this->m_generatedInstances[] = \iRAP\Ec2Wrapper\Ec2\Ec2Instance::createFromAwsItem($ec2StdObj);
-        }
-        
-        return $response;
+        return new \iRAP\Ec2Wrapper\Responses\LaunchInstancesResponse($response);
     }
     
     

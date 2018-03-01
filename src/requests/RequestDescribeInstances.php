@@ -8,7 +8,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * and open the template in the editor.
  */
 
-class RequestDescribeInstances extends Ec2RequestAbstract
+class RequestDescribeInstances extends AbstractEc2Request
 {
     private $m_region; 
     private $m_filters = null;
@@ -60,25 +60,10 @@ class RequestDescribeInstances extends Ec2RequestAbstract
      * @param array $opt - the optional parameters to be sent.
      * @return CFResponse $response
      */
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) 
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
     {
-        $response = $ec2->describeInstances($opt);
-        
-        $reservations = $response->get('Reservations');
-        
-        foreach ($reservations as $reservation)
-        {
-            $instances = $reservation['Instances'];
-            
-            foreach ($instances as $instanceSetItem)
-            {
-                $ec2Instance = \iRAP\Ec2Wrapper\Ec2\Ec2Instance::createFromAwsItem($instanceSetItem);
-                $this->m_instances[] = $ec2Instance;
-                $this->m_returned_instance_ids[] = $ec2Instance->getInstanceId();     
-            }
-        }
-        
-        return $response;
+        $rawResponse = $ec2->describeInstances($opt);
+        return new \iRAP\Ec2Wrapper\Responses\DescribeInstancesResponse($rawResponse);
     }
     
     

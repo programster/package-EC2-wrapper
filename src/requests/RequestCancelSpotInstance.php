@@ -6,7 +6,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * Object to cancel spot instance requests.
  */
 
-class RequestCancelSpotInstance extends Ec2RequestAbstract
+class RequestCancelSpotInstance extends AbstractEc2Request
 {
     private $m_request_id;
     private $m_region;
@@ -41,5 +41,4 @@ class RequestCancelSpotInstance extends Ec2RequestAbstract
         $response = $ec2->cancel_spot_instance_requests($this->m_request_id, $opt);
         return $response;
     }
-
 }

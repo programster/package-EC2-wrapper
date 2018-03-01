@@ -8,7 +8,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * http://docs.aws.amazon.com/AWSSDKforPHP/latest/#m=AmazonEC2/request_spot_instances
  */
 
-class RequestSpotInstance extends Ec2RequestAbstract
+class RequestSpotInstance extends AbstractEc2Request
 {
     private $m_price;
     private $m_num_instances;

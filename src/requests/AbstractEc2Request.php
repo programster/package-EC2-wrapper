@@ -8,7 +8,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * and open the template in the editor.
  */
 
-abstract class Ec2RequestAbstract
+abstract class AbstractEc2Request
 {
     private $m_return_curl_handle = null;
     private $m_curl_opts = array();
@@ -53,7 +53,7 @@ abstract class Ec2RequestAbstract
      * request. 
      * @return CFResponse
      */
-    public final function send(\Aws\Ec2\Ec2Client $ec2Client)
+    public final function send(\Aws\Ec2\Ec2Client $ec2Client) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
     {
         $opts = $this->getOptionsArray();
         

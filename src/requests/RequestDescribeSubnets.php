@@ -8,7 +8,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * http://docs.aws.amazon.com/AWSSDKforPHP/latest/index.html#m=AmazonEC2/describe_subnets
  */
 
-class RequestDescribeSubnets extends Ec2RequestAbstract
+class RequestDescribeSubnets extends AbstractEc2Request
 {
     private $m_region;
     private $m_filter = null;

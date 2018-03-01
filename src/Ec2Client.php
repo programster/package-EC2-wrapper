@@ -37,7 +37,7 @@ class Ec2Client
      * instance automatically launches with those additional volumes.
      * https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2016-11-15.html#createimage
      */
-    public function createImage(Objects\Ec2Instance $instance, string $imageName, string $description, bool $noReboot)
+    public function createImage(Objects\Ec2Instance $instance, string $imageName, string $description, bool $noReboot) : Responses\CreateImageResponse
     {
         $request = new Requests\RequestCreateImage(
             $instance, 
@@ -75,7 +75,7 @@ class Ec2Client
      * 
      * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#describeinstances
      */
-    public function describeInstances(\iRAP\Ec2Wrapper\Requests\RequestDescribeInstances $request)
+    public function describeInstances(\iRAP\Ec2Wrapper\Requests\RequestDescribeInstances $request) : Responses\DescribeInstancesResponse
     {
         return $request->send($this->m_client);
     }
@@ -85,7 +85,7 @@ class Ec2Client
      * Launch some on demand instances (fixed price).
      * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#runinstances
      */
-    public function runInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request)
+    public function runInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
         return $request->send($this->m_client);        
     }
@@ -97,7 +97,7 @@ class Ec2Client
      * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
      * @return type
      */
-    public function deployInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request)
+    public function deployInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
         return $this->runInstances($request);
     }
@@ -108,7 +108,7 @@ class Ec2Client
      * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
      * @return type
      */
-    public function launchInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request)
+    public function launchInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
         return $this->runInstances($request);
     }

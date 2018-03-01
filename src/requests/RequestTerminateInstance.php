@@ -6,7 +6,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * A request to terminate a single or multiple instances.
  */
 
-class RequestTerminateInstance extends Ec2RequestAbstract
+class RequestTerminateInstance extends AbstractEc2Request
 {
     private $m_instance_ids = array();
     
@@ -49,153 +49,18 @@ class RequestTerminateInstance extends Ec2RequestAbstract
      * Add another instance to list of instances to terminate.
      * @param type $instance_id - the unique ID of the instance we wish to terminate.
      */
-    public function add_instance($instance_id)
+    public function addInstance($instance_id)
     {
         $this->m_instance_ids[] = $instance_id;
     }
     
     
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt)
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
     {
         $response = $ec2->terminateInstances($opt);
-        return $response;
+        return new \iRAP\Ec2Wrapper\Responses\TerminateInstanceResponse($response);
     }
 }
 
-/*
- * Example response
-object(Aws\Result)#123 (1) {
-  ["data":"Aws\Result":private]=>
-  array(2) {
-    ["TerminatingInstances"]=>
-    array(2) {
-      [0]=>
-      array(3) {
-        ["InstanceId"]=>
-        string(10) "i-cdc6ee6c"
-        ["CurrentState"]=>
-        array(2) {
-          ["Code"]=>
-          int(32)
-          ["Name"]=>
-          string(13) "shutting-down"
-        }
-        ["PreviousState"]=>
-        array(2) {
-          ["Code"]=>
-          int(16)
-          ["Name"]=>
-          string(7) "running"
-        }
-      object(Aws\Result)#123 (1) {
-  ["data":"Aws\Result":private]=>
-  array(2) {
-    ["TerminatingInstances"]=>
-    array(2) {
-      [0]=>
-      array(3) {
-        ["InstanceId"]=>
-        string(10) "i-cdc6ee6c"
-        ["CurrentState"]=>
-        array(2) {
-          ["Code"]=>
-          int(32)
-          ["Name"]=>
-          string(13) "shutting-down"
-        }
-        ["PreviousState"]=>
-        array(2) {
-          ["Code"]=>
-          int(16)
-          ["Name"]=>
-          string(7) "running"
-        }
-      }
-      [1]=>
-      array(3) {
-        ["InstanceId"]=>
-        string(10) "i-1fe5cdbe"
-        ["CurrentState"]=>
-        array(2) {
-          ["Code"]=>
-          int(32)
-          ["Name"]=>
-          string(13) "shutting-down"
-        }
-        ["PreviousState"]=>
-        array(2) {
-          ["Code"]=>
-          int(16)
-          ["Name"]=>
-          string(7) "running"
-        }
-      }
-    }
-    ["@metadata"]=>
-    array(3) {
-      ["statusCode"]=>
-      int(200)
-      ["effectiveUri"]=>
-      string(35) "https://ec2.eu-west-1.amazonaws.com"
-      ["headers"]=>
-      array(5) {
-        ["content-type"]=>
-        string(22) "text/xml;charset=UTF-8"
-        ["transfer-encoding"]=>
-        string(7) "chunked"
-        ["vary"]=>
-        string(15) "Accept-Encoding"
-        ["date"]=>
-        string(29) "Mon, 21 Sep 2015 13:18:28 GMT"
-        ["server"]=>
-        string(9) "AmazonEC2"
-      }
-    }
-  }
-}
-}
-      [1]=>
-      array(3) {
-        ["InstanceId"]=>
-        string(10) "i-1fe5cdbe"
-        ["CurrentState"]=>
-        array(2) {
-          ["Code"]=>
-          int(32)
-          ["Name"]=>
-          string(13) "shutting-down"
-        }
-        ["PreviousState"]=>
-        array(2) {
-          ["Code"]=>
-          int(16)
-          ["Name"]=>
-          string(7) "running"
-        }
-      }
-    }
-    ["@metadata"]=>
-    array(3) {
-      ["statusCode"]=>
-      int(200)
-      ["effectiveUri"]=>
-      string(35) "https://ec2.eu-west-1.amazonaws.com"
-      ["headers"]=>
-      array(5) {
-        ["content-type"]=>
-        string(22) "text/xml;charset=UTF-8"
-        ["transfer-encoding"]=>
-        string(7) "chunked"
-        ["vary"]=>
-        string(15) "Accept-Encoding"
-        ["date"]=>
-        string(29) "Mon, 21 Sep 2015 13:18:28 GMT"
-        ["server"]=>
-        string(9) "AmazonEC2"
-      }
-    }
-  }
-}
 
-*/
 

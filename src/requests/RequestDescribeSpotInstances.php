@@ -7,7 +7,7 @@ namespace iRAP\Ec2Wrapper\Requests;
  * http://docs.aws.amazon.com/AWSSDKforPHP/latest/index.html#m=AmazonEC2/describe_regions
  */
 
-class RequestDescribeSpotInstances extends Ec2RequestAbstract
+class RequestDescribeSpotInstances extends AbstractEc2Request
 {
     private $m_region;
     private $m_spot_instance_request_ids = array();

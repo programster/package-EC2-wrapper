@@ -7,7 +7,7 @@
 
 namespace iRAP\Ec2Wrapper\Requests;
 
-class RequestCreateImage extends Ec2RequestAbstract
+class RequestCreateImage extends AbstractEc2Request
 {
     private $m_noReboot;
     private $m_imageName;
@@ -71,11 +71,9 @@ class RequestCreateImage extends Ec2RequestAbstract
     }
     
     
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt)
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
     {
-        $ec2->set_region((string)$this->m_region);
-        $response = $ec2->cancel_spot_instance_requests($this->m_request_id, $opt);
-        return $response;
+        $rawResponse = $ec2->createImage($opt);
+        return new \iRAP\Ec2Wrapper\Responses\CreateImageResponse($rawResponse);
     }
-
 }
