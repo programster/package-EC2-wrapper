@@ -1,0 +1,5 @@
+{
+    "require": {
+        "irap/autoloader": "^1.0"
+    }
+}
