@@ -5,7 +5,7 @@
  * returned. 
  */
 
-namespace iRAP\AwsWrapper\Objects;
+namespace iRAP\Ec2Wrapper\Objects;
 
 class AmazonFilter
 {

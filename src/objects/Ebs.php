@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Objects;
+namespace iRAP\Ec2Wrapper\Objects;
 
 /* 
  * Class for representing Ebs volumes.

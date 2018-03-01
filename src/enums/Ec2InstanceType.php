@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Enums;
+namespace iRAP\Ec2Wrapper\Enums;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

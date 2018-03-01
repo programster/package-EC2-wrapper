@@ -6,7 +6,7 @@
  * but as you can see the documentation is not finished, making it hard to complete this.
  */
 
-namespace iRAP\AwsWrapper\Objects;
+namespace iRAP\Ec2Wrapper\Objects;
 
 class IamInstanceProfile
 {

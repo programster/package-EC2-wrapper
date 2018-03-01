@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Enums;
+namespace iRAP\Ec2Wrapper\Enums;
 
 /* 
  * This is an 'enum' representing the regions in amazon.

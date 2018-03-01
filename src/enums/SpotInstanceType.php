@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Enums;
+namespace iRAP\Ec2Wrapper\Enums;
 
 /* 
  * This is a type specifier for when makeing a spot instance request. The two min types are 

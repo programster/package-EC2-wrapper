@@ -5,7 +5,7 @@
  * http://docs.aws.amazon.com/AWSSDKforPHP/latest/#m=AmazonEC2/request_spot_instances
  */
 
-namespace iRAP\AwsWrapper\Objects;
+namespace iRAP\Ec2Wrapper\Objects;
 
 
 

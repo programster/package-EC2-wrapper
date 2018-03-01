@@ -4,7 +4,7 @@
  * Represents a block device that can be attached to an aws instance.
  */
 
-namespace iRAP\AwsWrapper\Objects;
+namespace iRAP\Ec2Wrapper\Objects;
 
 class BlockDevice
 {

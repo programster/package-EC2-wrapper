@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Requests;
+namespace iRAP\Ec2Wrapper\Requests;
 
 /*
  * Class for spot instance requests.
@@ -34,7 +34,7 @@ class RequestRunInstances extends Ec2RequestAbstract
      * @param LaunchSpecification $launchSpecification - the launch specification of the request
      *                                                   refer to that object for details.
      */
-    public function __construct(\iRAP\AwsWrapper\Objects\LaunchSpecification $launchSpecification,
+    public function __construct(\iRAP\Ec2Wrapper\Objects\LaunchSpecification $launchSpecification,
                                 $maxCount, 
                                 $minCount)
     {
@@ -138,7 +138,7 @@ class RequestRunInstances extends Ec2RequestAbstract
         
         foreach ($ec2InstanceStdObjs as $ec2StdObj)
         {
-            $this->m_generatedInstances[] = \iRAP\AwsWrapper\Ec2\Ec2Instance::createFromAwsItem($ec2StdObj);
+            $this->m_generatedInstances[] = \iRAP\Ec2Wrapper\Ec2\Ec2Instance::createFromAwsItem($ec2StdObj);
         }
         
         return $response;

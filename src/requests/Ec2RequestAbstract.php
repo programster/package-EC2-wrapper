@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Requests;
+namespace iRAP\Ec2Wrapper\Requests;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Requests;
+namespace iRAP\Ec2Wrapper\Requests;
 
 /* 
  * A request to terminate a single or multiple instances.

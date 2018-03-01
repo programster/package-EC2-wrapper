@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\AwsWrapper\Requests;
+namespace iRAP\Ec2Wrapper\Requests;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -24,7 +24,7 @@ class RequestDescribeInstances extends Ec2RequestAbstract
      * @param Array $instance_ids - optionally specify an array of instance ids to describe
      * @return RequestDescribeInstances
      */
-    public function __construct(\iRAP\AwsWrapper\Enums\AwsRegion $region, array $instance_ids=array())
+    public function __construct(\iRAP\Ec2Wrapper\Enums\AwsRegion $region, array $instance_ids=array())
     {
         $this->m_region = $region;
         
@@ -72,7 +72,7 @@ class RequestDescribeInstances extends Ec2RequestAbstract
             
             foreach ($instances as $instanceSetItem)
             {
-                $ec2Instance = \iRAP\AwsWrapper\Ec2\Ec2Instance::createFromAwsItem($instanceSetItem);
+                $ec2Instance = \iRAP\Ec2Wrapper\Ec2\Ec2Instance::createFromAwsItem($instanceSetItem);
                 $this->m_instances[] = $ec2Instance;
                 $this->m_returned_instance_ids[] = $ec2Instance->getInstanceId();     
             }
@@ -95,10 +95,10 @@ class RequestDescribeInstances extends Ec2RequestAbstract
     
     /**
      * Set a filter for the instances we wish to retrieve.
-     * @param \iRAP\AwsWrapper\Objects\AmazonFilter $filter
+     * @param \iRAP\Ec2Wrapper\Objects\AmazonFilter $filter
      * @return void.
      */
-    public function set_filter(\iRAP\AwsWrapper\Objects\AmazonFilter $filter)
+    public function set_filter(\iRAP\Ec2Wrapper\Objects\AmazonFilter $filter)
     {
         $this->m_filters = $filter;
     }

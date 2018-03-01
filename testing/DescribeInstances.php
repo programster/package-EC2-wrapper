@@ -7,11 +7,11 @@ function main()
 {
     $apiKey = API_KEY;
     $secret = API_SECRET;
-    $region = \iRAP\AwsWrapper\Enums\AwsRegion::create_EU_W1();
+    $region = \iRAP\Ec2Wrapper\Enums\AwsRegion::create_EU_W1();
         
-    $awsWrapper = new iRAP\AwsWrapper\AwsWrapper($apiKey, $secret, $region);
+    $awsWrapper = new iRAP\Ec2Wrapper\AwsWrapper($apiKey, $secret, $region);
     
-    $request = new iRAP\AwsWrapper\Requests\RequestDescribeInstances(iRAP\AwsWrapper\Enums\AwsRegion::create_EU_W1());
+    $request = new iRAP\Ec2Wrapper\Requests\RequestDescribeInstances(iRAP\Ec2Wrapper\Enums\AwsRegion::create_EU_W1());
     $response = $awsWrapper->getEc2Client()->describeInstances($request);
     
     var_dump($response);
