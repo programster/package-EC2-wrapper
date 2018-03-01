@@ -37,10 +37,10 @@ class Ec2Client
      * instance automatically launches with those additional volumes.
      * https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2016-11-15.html#createimage
      */
-    public function createImage(Objects\Ec2Instance $instance, string $imageName, string $description, bool $noReboot) : Responses\CreateImageResponse
+    public function createImage(string $instanceID, string $imageName, string $description, bool $noReboot) : Responses\CreateImageResponse
     {
         $request = new Requests\RequestCreateImage(
-            $instance, 
+            $instanceID, 
             $imageName, 
             $description, 
             $noReboot

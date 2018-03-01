@@ -12,7 +12,7 @@ class RequestCreateImage extends AbstractEc2Request
     private $m_noReboot;
     private $m_imageName;
     private $m_description;
-    private $m_ec2Instance;
+    private $m_instanceID;
     private $m_blockDevices = array();
     
     
@@ -21,9 +21,9 @@ class RequestCreateImage extends AbstractEc2Request
      * @param AmazonRegion $region - the region the spot requests were made to.
      * @param mixed $spot_request_id - a single spot request id, or an array list of spot request ids.
      */
-    public function __construct(\iRAP\Ec2Wrapper\Objects\Ec2Instance $instance, string $imageName, string $description, bool $noReboot)
+    public function __construct(string $instanceID, string $imageName, string $description, bool $noReboot)
     {
-        $this->m_ec2Instance = $instance;
+        $this->m_instanceID = $instanceID;
         $this->m_imageName = $imageName;
         $this->m_description = $description;
         $this->m_noReboot = $noReboot;
@@ -51,7 +51,7 @@ class RequestCreateImage extends AbstractEc2Request
         $options = array(
             'Description' => $this->m_description,
             'DryRun' => false,
-            'InstanceId' => $this->m_ec2Instance->getInstanceId(),
+            'InstanceId' => $this->m_instanceID,
             'Name' => $this->m_imageName,
             'NoReboot' => $this->m_noReboot,
         );
