@@ -1,5 +1,15 @@
 {
     "require": {
-        "irap/autoloader": "^1.0"
+        "irap/autoloader": "^1.0",
+        "irap/ec2-wrapper": "@dev",
+        "irap/core-libs": "^1.1"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "rm -rf vendor/irap/ec2-wrapper && ln -s ../../../ vendor/irap/ec2-wrapper"
+        ],
+        "post-update-cmd": [
+            "rm -rf vendor/irap/ec2-wrapper && ln -s ../../../ vendor/irap/ec2-wrapper"
+        ]
     }
 }
