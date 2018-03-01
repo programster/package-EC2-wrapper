@@ -24,7 +24,8 @@
             "iRAP\\Ec2Wrapper\\": "src/",
             "iRAP\\Ec2Wrapper\\Enums\\": "src/enums/",
             "iRAP\\Ec2Wrapper\\Objects\\": "src/objects/",
-            "iRAP\\Ec2Wrapper\\Requests\\": "src/requests/"
+            "iRAP\\Ec2Wrapper\\Requests\\": "src/requests/",
+            "iRAP\\Ec2Wrapper\\Responses\\": "src/responses/"
         }
     }
 }
