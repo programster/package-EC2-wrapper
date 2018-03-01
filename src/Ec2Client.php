@@ -51,32 +51,14 @@ class Ec2Client
     
     
     /**
-     * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#createsnapshot
-     */
-    public function createSnapshot()
-    {
-        
-    }
-    
-    
-    public function deleteSnapshot()
-    {
-        
-    }
-    
-    
-    public function cancelSpotInstanceRequests()
-    {
-        
-    }
-    
-    
-    /**
-     * 
+     * Describe the specified instances, or get info on all instances if no instance IDs are provided.
+     * @param array $instanceIds - array of instance IDs to describe. If empty all instances returned.
      * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#describeinstances
+     * @return \iRAP\Ec2Wrapper\Responses\DescribeInstancesResponse
      */
-    public function describeInstances(\iRAP\Ec2Wrapper\Requests\RequestDescribeInstances $request) : Responses\DescribeInstancesResponse
+    public function describeInstances(array $instanceIds=array()) : Responses\DescribeInstancesResponse
     {
+        $request = new Requests\RequestDescribeInstances($instanceIds);
         return $request->send($this->m_client);
     }
     
@@ -123,26 +105,10 @@ class Ec2Client
     }
     
     
-    public function requestSpotInstances()
-    {
-        
-    }
-    
-    
-    public function requestSpotFleet()
-    {
-        
-    }
-    
-    
-    /**
-     * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#startinstances
-     */
     public function startInstances()
     {
         
     }
-    
     
     public function stopInstances()
     {
