@@ -1,0 +1,31 @@
+{
+    "name": "irap/aws-wrapper",
+    "type": "library",
+    "description": "Package for making it easier to work with AWS EC2.",
+    "keywords": ["AWS","EC2"],
+    "homepage": "http://www.irap.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stuart Page",
+            "email": "support@irap.org",
+            "homepage": "https://github.com/iRAP-software/package-EC2-wrapper",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "irap/core-libs": "1.1.*",
+        "aws/aws-sdk-php" : "3.52.*",
+        "ext-libxml" : "*",
+        "ext-simplexml" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "iRAP\\AwsWrapper\\": "src/",
+            "iRAP\\AwsWrapper\\Enums\\": "src/enums/",
+            "iRAP\\AwsWrapper\\Objects\\": "src/objects/",
+            "iRAP\\AwsWrapper\\Requests\\": "src/requests/"
+        }
+    }
+}
