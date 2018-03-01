@@ -31,4 +31,9 @@ class Tag
             'Value' => $this->m_value
         );
     }
+    
+    
+    # Accessors
+    public function getKey(): string { return $this->m_key; }
+    public function getValue() { return $this->m_value; }
 }

@@ -30,6 +30,7 @@ class Ec2Instance
     private $m_private_ip_address;
     private $m_ip_address;
     private $m_source_dest_check;
+    private $m_tags = array();
     private $m_group_set;
     private $m_architecture;
     private $m_root_device_type;
@@ -116,6 +117,15 @@ class Ec2Instance
         $ec2Instance->m_network_interfaces          = $item['NetworkInterfaces']; #  this is an object that needs def
         $ec2Instance->m_ebs_optimized               = $item['EbsOptimized']; # boolean value
         
+        if (isset($item['Tags']))
+        {
+            foreach ($item['Tags'] as $tag)
+            {
+                $ec2Instance->m_tags[] = new Tag($tag['Key'], $tag['Value']);
+            }
+        }
+        
+        
         // These items were not in the request for RunInstances, however they may be in the
         // request for spot instances?
         $ec2Instance->m_instance_lifecycle          = @$item['instanceLifecycle'];
@@ -141,9 +151,37 @@ class Ec2Instance
     }
     
     
+    /**
+     * Get the name a human assigned to the instance (through tags).
+     * There may not be a name, in which case will return ""
+     */
+    public function getName() : string
+    {
+        $name = "";
+        
+        if (count($this->m_tags) > 0)
+        {
+            foreach ($this->m_tags as $tag)
+            {
+                /* @var $tag Tag */
+                if ($tag->getKey() === "Name")
+                {
+                    $name = $tag->getValue();
+                    break;
+                }
+            }
+        }
+        
+        return $name;
+    }
+    
+    
+    # Direct Accessors
     public function getInstanceId()     { return $this->m_instance_id; }
     public function getStateString()    { return $this->m_instance_state_name; }
     public function getDeploymentTime() { return $this->m_launch_time; }
+    public function getTags()           { return $this->m_tags; }
+    
     
     # These accessors may not have a value.
     public function getSpotInstanceRequestId() { return $this->m_spot_instance_request_id; }
