@@ -55,7 +55,7 @@ abstract class Ec2RequestAbstract
      */
     public final function send(\Aws\Ec2\Ec2Client $ec2Client)
     {
-        $opts = static::getOptionsArray();
+        $opts = $this->getOptionsArray();
         
         if (count($this->m_curl_opts) > 0)
         {
@@ -70,7 +70,7 @@ abstract class Ec2RequestAbstract
         }
         
         // Get the response from a call to the DescribeImages operation.
-        $response = static::sendRequest($ec2Client, $opts);        
+        $response = $this->sendRequest($ec2Client, $opts);        
         return $response;
     }
 }
