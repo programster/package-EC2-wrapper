@@ -3,7 +3,7 @@
 namespace iRAP\Ec2Wrapper\Requests;
 
 /*
- * Class for spot instance requests.
+ * Class for deploying on-demand instances.
  * Please refer to the documentation at:
  * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#runinstances
  */

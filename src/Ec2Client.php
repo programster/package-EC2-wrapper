@@ -79,7 +79,7 @@ class Ec2Client
      * Launch some on demand instances (fixed price).
      * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#runinstances
      */
-    public function runInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
+    public function runInstances(Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
         return $request->send($this->m_client);        
     }
@@ -91,10 +91,11 @@ class Ec2Client
      * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
      * @return type
      */
-    public function deployInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
+    public function deployInstances(Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
         return $this->runInstances($request);
     }
+    
     
     /**
      * Alias for runInstances() 
@@ -102,7 +103,7 @@ class Ec2Client
      * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
      * @return type
      */
-    public function launchInstances(\iRAP\Ec2Wrapper\Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
+    public function launchInstances(Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
         return $this->runInstances($request);
     }
@@ -111,20 +112,32 @@ class Ec2Client
     /**
      * Alias for RunInstances
      */
-    public function requestOnDemandInstances()
+    public function requestOnDemandInstances(Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
     {
-        $this->runInstances();
+        return $this->runInstances($request);
     }
     
     
-    public function startInstances()
+    /**
+     * Send a request to start some stopped instances.
+     * @param \iRAP\Ec2Wrapper\Requests\RequestStartInstances $request
+     * @return \iRAP\Ec2Wrapper\Responses\StartInstancesResponse
+     */
+    public function startInstances(Requests\RequestStartInstances $request) : Responses\StartInstancesResponse
     {
-        
+        return $request->send($this->m_client);
     }
     
-    public function stopInstances()
+    
+    /**
+     * Send a request to stop some EC2 instances.
+     * Refer to https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2016-11-15.html#stopinstances
+     * @param \iRAP\Ec2Wrapper\Requests\RequestStopInstances $request
+     * @return \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+     */
+    public function stopInstances(Requests\RequestStopInstances $request) : Responses\StopInstancesResponse
     {
-        
+        return $request->send($this->m_client);
     }
     
     

@@ -1,9 +1,7 @@
 <?php
 
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Run the tests.
  */
 
 require_once(__DIR__ . '/../vendor/autoload.php');
@@ -37,4 +35,13 @@ foreach ($tests as $testFilename)
     /* @var $testToRun AbstractTest */
     $testToRun = new $testName();
     $testToRun->run($ec2Client);
+    
+    if ($testToRun->getPassed())
+    {
+        print $testName . ": \e[32mPASSED\e[0m" . PHP_EOL;
+    }
+    else 
+    {
+        print $testName . ": \e[31mFAILED\e[0m" . PHP_EOL;
+    }
 }

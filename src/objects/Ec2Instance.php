@@ -11,7 +11,7 @@ class Ec2Instance
     private $m_instance_id;
     private $m_image_id;
     private $m_instance_state_code;
-    private $m_instance_state_name;
+    private $m_state;
     private $m_private_dns_name;
     private $m_dns_name;
     private $m_state_transition_reason;
@@ -50,6 +50,25 @@ class Ec2Instance
     
     
     /**
+     * Create an ec2Instance object for the provided ID.
+     * WARNING - this will run a request to describe the instance so it can be slow/sub-optimal
+     * @param string $id
+     */
+    public static function createFromID(string $id, \iRAP\Ec2Wrapper\Ec2Client $client) : Ec2Instance
+    {
+        $response = $client->describeInstances(array($id));
+        $instances = $response->getEc2Instances();
+        
+        if (count($instances) !== 1)
+        {
+            throw new Exception("Failed to load Ec2 instance: $id");
+        }
+        
+        return \iRAP\CoreLibs\ArrayLib::getFirstElement($instances);
+    }
+    
+    
+    /**
      * Creates an Ec2Instance object from the $item stdObject returned from an amazon request.
      * Unfortunately without casting, all values get set as simplexml objects.
      * @param \stdClass $item
@@ -62,42 +81,42 @@ class Ec2Instance
         $ec2Instance->m_instance_id                 = $item['InstanceId'];
         $ec2Instance->m_image_id                    = $item['ImageId'];
         $ec2Instance->m_instance_state_code         = intval($item['State']['Code']); # e.g 16 (running)
-        $ec2Instance->m_instance_state_name         = $item['State']['Name']; # e.g. running
+        $ec2Instance->m_state                       = new \iRAP\Ec2Wrapper\Enums\Ec2State($item['State']['Name']); # e.g. running
         $ec2Instance->m_private_dns_name            = $item['PrivateDnsName'];
         $ec2Instance->m_dns_name                    = $item['PublicDnsName'];
         $ec2Instance->m_state_transition_reason     = $item['StateTransitionReason']; #unknown object
         $ec2Instance->m_ami_launch_index            = intval($item['AmiLaunchIndex']);
         
         
-        $ec2Instance->m_product_codes               = $item['ProductCodes']; # array of something (empty in example given)
-        $ec2Instance->m_instance_type               = $item['InstanceType']; // e.g. "t2.micro"
+        $ec2Instance->m_product_codes = $item['ProductCodes']; # array of something (empty in example given)
+        $ec2Instance->m_instance_type = $item['InstanceType']; // e.g. "t2.micro"
         
         # It's odd, but the LaunchTime objects attributes are all lowercase unlike everything else.
-        $ec2Instance->m_launch_time                 = strtotime((string)$item['LaunchTime']); # 2015-09-18 13:48:08
+        $ec2Instance->m_launch_time = strtotime((string)$item['LaunchTime']); # 2015-09-18 13:48:08
         
-        $ec2Instance->m_placement                   = \iRAP\Ec2Wrapper\Objects\Placement::createFromAwsApi($item['Placement']);
+        $ec2Instance->m_placement = \iRAP\Ec2Wrapper\Objects\Placement::createFromAwsApi($item['Placement']);
         
-        $ec2Instance->m_monitoring_state            = $item['Monitoring']['State']; # e.g. "disabled"
+        $ec2Instance->m_monitoring_state = $item['Monitoring']['State']; # e.g. "disabled"
         
         if (isset($item['SubnetId']))
         {
-            $ec2Instance->m_subnet_id                   = $item['SubnetId']; # e.g. "subnet-f7b4479d"
+            $ec2Instance->m_subnet_id = $item['SubnetId']; # e.g. "subnet-f7b4479d"
         }
         
         if (isset($item['VpcId']))
         {
-            $ec2Instance->m_vpc_id                      = $item['VpcId']; # e.g. vpc-f6b4479c"
+            $ec2Instance->m_vpc_id = $item['VpcId']; # e.g. vpc-f6b4479c"
         }
         
         if (isset($item['PrivateIpAddress']))
         {
-            $ec2Instance->m_private_ip_address          = $item['PrivateIpAddress']; # "172.31.33.19"
+            $ec2Instance->m_private_ip_address = $item['PrivateIpAddress']; # "172.31.33.19"
         }
         
         if (isset($item['StateReason']))
         {
-            $ec2Instance->m_state_reason_code           = $item['StateReason']['Code']; # "pending"
-            $ec2Instance->m_state_reason_message        = $item['StateReason']['Message']; # "pending"
+            $ec2Instance->m_state_reason_code = $item['StateReason']['Code']; # "pending"
+            $ec2Instance->m_state_reason_message = $item['StateReason']['Message']; # "pending"
         }
         
         $ec2Instance->m_architecture                = $item['Architecture']; # "x86_64"
@@ -110,7 +129,7 @@ class Ec2Instance
         
         if (isset($item['SourceDestCheck']))
         {
-            $ec2Instance->m_source_dest_check           = $item['SourceDestCheck']; # boolean value
+            $ec2Instance->m_source_dest_check = $item['SourceDestCheck']; # boolean value
         }
         
         $ec2Instance->m_hypervisor                  = $item['Hypervisor']; # "xen"
@@ -152,6 +171,36 @@ class Ec2Instance
     
     
     /**
+     * Stop the instance.
+     * @param \iRAP\Ec2Wrapper\Ec2Client $client
+     * @param bool $force
+     * @return \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+     */
+    public function stop(\iRAP\Ec2Wrapper\Ec2Client $client, bool $force) : \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+    {
+        $stopRequest = new \iRAP\Ec2Wrapper\Requests\RequestStopInstances(
+            array($this->m_instance_id), 
+            $force
+        );
+        
+        return $client->stopInstances($stopRequest);
+    }
+    
+    
+    /**
+     * Start the instance.
+     * @param \iRAP\Ec2Wrapper\Ec2Client $client
+     * @param bool $force
+     * @return \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+     */
+    public function start(\iRAP\Ec2Wrapper\Ec2Client $client) : \iRAP\Ec2Wrapper\Responses\StartInstancesResponse
+    {
+        $startRequest = new \iRAP\Ec2Wrapper\Requests\RequestStopInstances([$this->m_instance_id]);
+        return $client->startInstances($startRequest);
+    }
+    
+    
+    /**
      * Get the name a human assigned to the instance (through tags).
      * There may not be a name, in which case will return ""
      */
@@ -176,12 +225,16 @@ class Ec2Instance
     }
     
     
-    # Direct Accessors
-    public function getInstanceId()     { return $this->m_instance_id; }
-    public function getStateString()    { return $this->m_instance_state_name; }
+    # Accessors
+    public function getInstanceId() { return $this->m_instance_id; }
+    public function getStateString() : string { return (string) $this->m_state; }
     public function getDeploymentTime() { return $this->m_launch_time; }
     public function getTags()           { return $this->m_tags; }
     
+    public function getState() : \iRAP\Ec2Wrapper\Enums\Ec2State 
+    { 
+        return $this->m_state;    
+    }
     
     # These accessors may not have a value.
     public function getSpotInstanceRequestId() { return $this->m_spot_instance_request_id; }
