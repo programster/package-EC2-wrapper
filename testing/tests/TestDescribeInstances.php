@@ -17,7 +17,15 @@ class TestDescribeInstances extends AbstractTest
         {
             $response = $ec2client->describeInstances();
             $instances = $response->getEc2Instances();
-            print "described instances: " . print_r($instances, true);
+            
+            if (count($instances) == 2)
+            {
+                $this->m_passed = true;
+            }
+            else
+            {
+                $this->m_passed = false;
+            }
         } 
         finally 
         {
