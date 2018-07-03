@@ -30,9 +30,7 @@ class TestHelper
         // wait for instance to get into the running state.
         while ($ec2Instance->getStateString() !== \iRAP\Ec2Wrapper\Enums\Ec2State::STATE_RUNNING)
         {
-            print "Spawning instance is in the {$ec2Instance->getStateString()} state." . PHP_EOL;
             sleep(10); // give the instance time to spawn
-            print "Checking if EC2 instance has finished spawning...." . PHP_EOL;
             $describeInstanceResponse = $ec2client->describeInstances($instanceIds);
             $describedInstances = $describeInstanceResponse->getEc2Instances();
             $ec2Instance = $describedInstances[0];
@@ -54,34 +52,33 @@ class TestHelper
             array($ec2Instance->getInstanceId()), 
             $force=false
         );
-
+        
         /* @var $response iRAP\Ec2Wrapper\Responses\StopInstancesResponse */
         $response = $ec2client->stopInstances($stopRequest);
-
-
+        
         // wait for the instance to stop.
         $maxWaitTime = 60;
         $timeStart = time();
         $instanceStopped = false;
-
+        
         while ($instanceStopped === FALSE)
         {
             if ((time() - $timeStart) > $maxWaitTime)
             {
                 break;
             }
-
+            
             $newCopyOfInstance = \iRAP\Ec2Wrapper\Objects\Ec2Instance::createFromID(
                 $ec2Instance->getInstanceId(), 
                 $ec2client
             );
-
+            
             if ($newCopyOfInstance->getStateString() === \iRAP\Ec2Wrapper\Enums\Ec2State::STATE_STOPPED)
             {
                 $instanceStopped = true;
             }
         }
-
+        
         if ($instanceStopped === FALSE)
         {
             throw new Exception("Failed to deploy a stopped instance.");
