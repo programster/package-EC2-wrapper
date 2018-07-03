@@ -6,6 +6,12 @@
 
 class TestDeployInstance extends AbstractTest
 {
+    public function getDescription(): string 
+    {
+        return "Test the deployment of an EC2 instance.";
+    }
+    
+    
     public function run(\iRAP\Ec2Wrapper\Ec2Client $ec2client)
     {
         $ubuntuImage = 'ami-cc166eb5';

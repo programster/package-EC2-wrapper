@@ -2,6 +2,12 @@
 
 class TestDescribeInstances extends AbstractTest
 {
+    public function getDescription(): string 
+    {
+        return "Test that we can describe the deployed instances.";
+    }
+    
+    
     public function run(\iRAP\Ec2Wrapper\Ec2Client $ec2client) 
     {
         $ec2Instance1 = TestHelper::createEc2Instance($ec2client);

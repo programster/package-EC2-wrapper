@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-require_once(__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/Settings.php');
 
 $classDirs = array(

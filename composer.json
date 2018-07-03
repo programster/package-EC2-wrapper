@@ -19,6 +19,10 @@
         "ext-libxml" : "*",
         "ext-simplexml" : "*"
     },
+    "require-dev": {
+        "irap/autoloader": "^1.0",
+        "irap/core-libs": "^1.1"
+    },
     "autoload": {
         "psr-4": {
             "iRAP\\Ec2Wrapper\\": "src/",

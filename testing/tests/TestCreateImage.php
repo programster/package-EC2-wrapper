@@ -2,6 +2,12 @@
 
 class TestCreateImage extends AbstractTest
 {
+    public function getDescription(): string 
+    {
+        return "Test the creating of an AMI for an ec2 instance.";
+    }
+    
+    
     public function run(\iRAP\Ec2Wrapper\Ec2Client $ec2client) 
     {
         $ec2Instance = TestHelper::createEc2Instance($ec2client);
@@ -12,7 +18,7 @@ class TestCreateImage extends AbstractTest
         try 
         {
             $response = $ec2client->createImage(
-                $ec2Instance, 
+                $ec2Instance->getInstanceId(), 
                 $imageName, 
                 "This is a test of image creation", 
                 $noReboot=true
