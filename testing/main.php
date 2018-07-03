@@ -32,6 +32,7 @@ foreach ($tests as $testFilename)
 {
     $testName = substr($testFilename, 0, -4);
     
+    print "Running test: $testName" . PHP_EOL;
     /* @var $testToRun AbstractTest */
     $testToRun = new $testName();
     $testToRun->run($ec2Client);
