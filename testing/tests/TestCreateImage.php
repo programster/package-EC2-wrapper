@@ -24,7 +24,10 @@ class TestCreateImage extends AbstractTest
                 $noReboot=true
             );
             
-            $response->getImageID();
+            if (\iRAP\CoreLibs\StringLib::contains($response->getImageID(), "ami-"))
+            {
+                $this->m_passed = true;
+            }
         } 
         finally 
         {
