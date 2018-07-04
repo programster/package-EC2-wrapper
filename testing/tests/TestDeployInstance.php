@@ -45,7 +45,7 @@ class TestDeployInstance extends AbstractTest
         }
         
         // cleanup
-        foreach ($instances as $instance)
+        foreach ($launchResponse->getEc2Instances() as $instance)
         {
             /* @var $instance \iRAP\Ec2Wrapper\Objects\Ec2Instance */
             $instance->terminate($ec2client);
