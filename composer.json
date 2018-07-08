@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "aws/aws-sdk-php" : "3.52.*",
+        "aws/aws-sdk-php" : "3.62.*",
         "ext-libxml" : "*",
         "ext-simplexml" : "*"
     },
