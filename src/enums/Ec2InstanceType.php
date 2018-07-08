@@ -3,9 +3,8 @@
 namespace iRAP\Ec2Wrapper\Enums;
 
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * An object to represent the type of an EC2 Instance. 
+ * Refer to https://aws.amazon.com/ec2/pricing/on-demand/
  */
 
 class Ec2InstanceType
@@ -19,7 +18,7 @@ class Ec2InstanceType
      * @param void
      * @return Ec2InstanceType
      */
-    public static function createT1()
+    public static function createT1() : Ec2InstanceType
     {
         $ec2InstanceType = new Ec2InstanceType('t1.micro');
         return $ec2InstanceType;
@@ -31,7 +30,7 @@ class Ec2InstanceType
      * @param int $size - int between 1 and 4 with 1 being the smallest size for t2.micro.
      * @return Ec2InstanceType
      */
-    public static function createT2(int $size)
+    public static function createT2(int $size) : Ec2InstanceType
     {
         if ($size > 7 || $size < 1)
         {
@@ -55,36 +54,119 @@ class Ec2InstanceType
     
     /**
      * Create one of the new general purpose Instances.
-     * @param int $size - integer between 1 - 2 representing the size of the instance
-     *  1 - 4 vcpu 13 ECU, 15 GiB Ram, 2 x 40 SSD, $0.495 per Hour
-     *  2 - 8 vcpu 26 ECU 30 GiB Ram, 2 x 80 SSD $0.990 per hour.
-     * @return Ec2InstanceType
-     * @throws Exception if size is not within range.
+     * @param int $size - integer between 1 - 6 representing the size of the instance
+     *  1 -  2 vcpu   8 ECU,   8 GiB Ram
+     *  2 -  4 vcpu  16 ECU   16 GiB Ram
+     *  3 -  8 vcpu  31 ECU   31 GiB Ram
+     *  4 - 16 vcpu  60 ECU   64 GiB Ram
+     *  5 - 48 vcpu 173 ECU  192 GiB Ram
+     *  6 - 96 vcpu 345 ECU  384 GiB Ram
+     * 
+     * @param bool $addNvme - whether to deploy an instance with local nvme storate (m5d)
+     * @return \iRAP\Ec2Wrapper\Enums\Ec2InstanceType
+     * @throws \Exception if size is not within range.
      */
-    public static function createGeneralPurposeNew($size)
+    public static function createGeneralPurposeNew($size, bool $addNvme) : Ec2InstanceType
     {
-        switch ($size)
-        {        
-            case 1:
-            {
-                $ec2InstanceType = new Ec2InstanceType('m3.xlarge');
-            }
-            break;
-        
-            case 2:
-            {
-                $ec2InstanceType = new Ec2InstanceType('m3.2xlarge');
-            }
-            break;
-            
-            default:
-            {
-                $err_msg = 'createGeneralPurpose - Unrecognized size: ' . $size . '. Please ' .
-                           'provide a value between 1 and 5';
+        if ($addNvme)
+        {
+            switch ($size)
+            {        
+                case 1:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5d.large');
+                }
+                break;
                 
-                throw new \Exception($err_msg);
+                case 2:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5d.xlarge');
+                }
+                break;
+                
+                case 3:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5d.2xlarge');
+                }
+                break;
+                
+                case 4:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5d.4xlarge');
+                }
+                break;
+                
+                case 5:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5d.12xlarge');
+                }
+                break;
+                
+                case 6:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5d.24xlarge');
+                }
+                break;
+                
+                default:
+                {
+                    $err_msg = 'createGeneralPurpose - Unrecognized size: ' . $size . '. Please ' .
+                               'provide a value between 1 and 5';
+                    
+                    throw new \Exception($err_msg);
+                }
             }
         }
+        else
+        {
+            switch ($size)
+            {        
+                case 1:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5.large');
+                }
+                break;
+                
+                case 2:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5.xlarge');
+                }
+                break;
+                
+                case 3:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5.2xlarge');
+                }
+                break;
+                
+                case 4:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5.4xlarge');
+                }
+                break;
+                
+                case 5:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5.12xlarge');
+                }
+                break;
+                
+                case 6:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('m5.24xlarge');
+                }
+                break;
+                
+                default:
+                {
+                    $err_msg = 'createGeneralPurpose - Unrecognized size: ' . $size . '. Please ' .
+                               'provide a value between 1 and 5';
+                    
+                    throw new \Exception($err_msg);
+                }
+            }
+        }
+        
         
         return $ec2InstanceType;
     }
@@ -93,96 +175,120 @@ class Ec2InstanceType
     /**
      * Create one of the old general purpose instances.
      * @param int $size - int between 1 and 4 representing the size of instance (1 being smallest)
-     *                    1 - m1 small
-     *                    2 - m1 medium
-     *                    3 - m1 large
-     *                    4 - m1 xlarge
+     *                    1 - m4 large
+     *                    2 - m4 xlarge
+     *                    3 - m4 2xlarge
+     *                    4 - m4 4xlarge
+     *                    5 - m4 10xlarge
+     *                    6 - m4 16xlarge
      * @throws Exception if size is not an integer between 1 and 4.
      */
-    public static function createGeneralPurposeOld($size)
+    public static function createGeneralPurposeOld($size) : Ec2InstanceType
     {
         switch ($size)
         {
             case 1:
             {
-                $ec2InstanceType = new Ec2InstanceType('m1.small');
+                $ec2InstanceType = new Ec2InstanceType('m4.large');
             }
             break;
-        
+            
             case 2:
             {
-                $ec2InstanceType = new Ec2InstanceType('m1.medium');
+                $ec2InstanceType = new Ec2InstanceType('m4.xlarge');
             }
             break;
-        
+            
             case 3:
             {
-                $ec2InstanceType = new Ec2InstanceType('m1.large');
+                $ec2InstanceType = new Ec2InstanceType('m4.2xlarge');
             }
             break;
-        
+            
             case 4:
             {
-                $ec2InstanceType = new Ec2InstanceType('m1.xlarge');
+                $ec2InstanceType = new Ec2InstanceType('m4.4xlarge');
+            }
+            break;
+            
+            case 5:
+            {
+                $ec2InstanceType = new Ec2InstanceType('m4.10xlarge');
+            }
+            break;
+            
+            case 6:
+            {
+                $ec2InstanceType = new Ec2InstanceType('m4.16xlarge');
             }
             break;
         
             default:
             {
                 $err_msg = 'createGeneralPurpose - Unrecognized size: ' . $size . '. Please ' .
-                           'provide a value between 1 and 4';
+                           'provide a value between 1 and 6';
                 
                 throw new \Exception($err_msg);
             }
         }
     }
     
-  
-    # High Memory
-    
     
     /**
-     * Create an instance that is targetted towards high amounts of RAM
-     * @param int $size - the size of the instance with 1 being the smallest
-     *                  1 - 17.1 Gig
-     *                  2 - 34.2 Gig
-     *                  3 - 68.4 Gig
-     *                  4 - 244 Gig
-     * 
+     * Create an instance that is targetted towards high amounts of RAM (r4 series)
+     * @param int $size - the size of the instance with 1 being the smallest and 6 being largest
+     *                  1 -  15.25 GiB
+     *                  2 -  30.5 GiB
+     *                  3 -  61   GiB
+     *                  4 - 122   GiB
+     *                  5 - 244   GiB
+     *                  6 - 488   GiB
      * @throws Exception if size was not a valid number.
      */
-    public static function createHighMemory($size)
+    public static function createHighMemory($size) : Ec2InstanceType
     {
         switch ($size)
         {        
             case 1:
             {
-                $ec2InstanceType = new Ec2InstanceType('m2.xlarge');
+                $ec2InstanceType = new Ec2InstanceType('r4.large');
             }
             break;
-            
+        
             case 2:
             {
-                $ec2InstanceType = new Ec2InstanceType('m2.2xlarge');
+                $ec2InstanceType = new Ec2InstanceType('r4.xlarge');
             }
             break;
             
             case 3:
             {
-                $ec2InstanceType = new Ec2InstanceType('m2.4xlarge');
+                $ec2InstanceType = new Ec2InstanceType('r4.2xlarge');
             }
             break;
             
             case 4:
             {
-                $ec2InstanceType = new Ec2InstanceType('cr1.8xlarge');
+                $ec2InstanceType = new Ec2InstanceType('r4.4xlarge');
+            }
+            break;
+            
+            case 5:
+            {
+                $ec2InstanceType = new Ec2InstanceType('r4.8xlarge');
+            }
+            break;
+        
+            case 6:
+            {
+                $ec2InstanceType = new Ec2InstanceType('r4.16xlarge');
             }
             break;
             
             default:
             {
                 $err_msg = 'createHighMemory - Unrecognized size: ' . $size . '. Please ' .
-                           'provide a value between 1 and 4';
+                           'provide a value between 1 and 6';
                 
                 throw new \Exception($err_msg);
             }
@@ -198,7 +304,7 @@ class Ec2InstanceType
      * @return \Ec2InstanceType
      * @throws Exception if $size provided was not an allowed value.
      */
-    public static function createNewHighCpu($size)
+    public static function createOldHighCpu($size) : Ec2InstanceType
     {
         switch ($size)
         {
@@ -246,53 +352,110 @@ class Ec2InstanceType
     
     
     /**
-     * Create a previous generation compute optimized instance
-     * @param int $size - int between 1 and 3 where 1 represents the smallest instance.
-     * @return Ec2InstanceType
-     * @throws Exception if $size is not an acceptable number
+     * Create one of the new Compute optimized instances. (e.g. c5 family)
+     * @param int $size - integer between 1-6 to represent the size of the instance with 1 being
+     *                    the smallest, and 4 being the largest and most expensive.
+     *                    Each step in size doubles the compute capability and price.
+     * @param bool $includeLocalNvmeStorage - if true, will deploy a c5d instance instead of a c5
+     *                                        which is a little more but has local NVME storage.
+     * @return \iRAP\Ec2Wrapper\Enums\Ec2InstanceType
+     * @throws \Exception if $size provided was not an allowed value.
      */
-    public static function createOldHighCpu($size)
+    public static function createNewHighCpu(int $size, bool $includeLocalNvmeStorage) : Ec2InstanceType
     {
-        switch ($size)
+        if ($includeLocalNvmeStorage)
         {
-            case 1:
+            switch ($size)
             {
-                $ec2InstanceType = new Ec2InstanceType('c3.large');
-            }
-            break;
-            
-            case 2:
-            {
-                $ec2InstanceType = new Ec2InstanceType('c3.xlarge');
-            }
-            break;
-            
-            case 3:
-            {
-                $ec2InstanceType = new Ec2InstanceType('c3.2xlarge');
-            }
-            break;
-            
-            case 4:
-            {
-                $ec2InstanceType = new Ec2InstanceType('c3.4xlarge');
-            }
-            break;
-            
-            case 5:
-            {
-                $ec2InstanceType = new Ec2InstanceType('c3.8xlarge');
-            }
-            break;
-            
-            default:
-            {
-                $err_msg = 'Unrecognized size: ' . $size . '. Please provide a value between ' .
-                           '1 and 5';
+                case 1:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c5d.large');
+                }
+                break;
                 
-                throw new \Exception($err_msg);
+                case 2:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c5d.xlarge');
+                }
+                break;
+                
+                case 3:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c5d.2xlarge');
+                }
+                break;
+                
+                case 4:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c5d.4xlarge');
+                }
+                break;
+                
+                case 5:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c5d.9xlarge');
+                }
+                break;
+                
+                case 6:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c5d.18xlarge');
+                }
+                break;
+                
+                default:
+                {
+                    $err_msg = 'Unrecognized size: ' . $size . '. Please provide a value between ' .
+                               '1 and 6';
+
+                    throw new \Exception($err_msg);
+                }
             }
         }
+        else
+        {
+            switch ($size)
+            {
+                case 1:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c4.large');
+                }
+                break;
+                
+                case 2:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c4.xlarge');
+                }
+                break;
+                
+                case 3:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c4.2xlarge');
+                }
+                break;
+                
+                case 4:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c4.4xlarge');
+                }
+                break;
+                
+                case 5:
+                {
+                    $ec2InstanceType = new Ec2InstanceType('c4.8xlarge');
+                }
+                break;
+                
+                default:
+                {
+                    $err_msg = 'Unrecognized size: ' . $size . '. Please provide a value between ' .
+                               '1 and 6';
+                    
+                    throw new \Exception($err_msg);
+                }
+            }
+        }
+        
         
         return $ec2InstanceType;
     }
@@ -302,7 +465,7 @@ class Ec2InstanceType
      * Create a high IO storage optimized instance (SSD local storage)
      * @param int $size - int between 1 and 4
      */
-    public static function createHighIo($size)
+    public static function createHighIo($size) : Ec2InstanceType
     {
         switch ($size)
         {
@@ -329,7 +492,7 @@ class Ec2InstanceType
                 $ec2InstanceType = new Ec2InstanceType('i2.8xlarge');
             }
             break;
-        
+            
             default:
             {
                 $err_msg = 'Unrecognized size: ' . $size . '. Please provide a value between ' .
@@ -343,17 +506,6 @@ class Ec2InstanceType
     }
     
     
-    /**
-     * Create the storage instance which just has a huge amount of local storage. 24 x 2048Gig
-     * drives.
-     */
-    public static function createStorage()
-    {
-        $ec2InstanceType = new Ec2InstanceType('hs1.8xlarge');
-        return $ec2InstanceType;
-    }
-    
-    
     
     /**
      * Allows the user to create one of this object from passing a string which is validated.
@@ -361,7 +513,7 @@ class Ec2InstanceType
      * @return Ec2InstanceType
      * @throws Exception if an unrecognized size/type is given.
      */
-    public static function createFromString($size)
+    public static function createFromString($size) : Ec2InstanceType
     {
         $allowedTypes = array(
             't1.micro',
@@ -371,6 +523,8 @@ class Ec2InstanceType
             't2.small',
             't2.medium',
             't2.large',
+            't2.xlarge',
+            't2.2xlarge',
             
             'm1.small',
             'm1.medium',
@@ -378,39 +532,82 @@ class Ec2InstanceType
             'm1.xlarge',
             
             // High Memory
+            'r4.large',
+            'r4.xlarge',
+            'r4.2xlarge',
+            'r4.4xlarge',
+            'r4.8xlarge',
+            'r4.16xlarge',
+            
+            // general purpose
             'm2.xlarge',
             'm2.2xlarge',
             'm2.4xlarge',
             'm3.xlarge',
             'm3.4xlarge',
             
+            'm4.large',
+            'm4.xlarge',
+            'm4.2xlarge',
+            'm4.4xlarge',
+            'm4.10xlarge',
+            'm4.16xlarge',
+            
+            'm5.large',
+            'm5.xlarge',
+            'm5.2xlarge',
+            'm5.4xlarge',
+            'm5.12xlarge',
+            'm5.24xlarge',
+            
+            'm5d.large',
+            'm5d.xlarge',
+            'm5d.2xlarge',
+            'm5d.4xlarge',
+            'm5d.12xlarge',
+            'm5d.24xlarge',
+            
             // High CPU
-            'c1.medium',
-            'c1.xlarge',
-            
-            // Cluster
-            'cc1.4xlarge',
-            'cc2.8xlarge',
-            'cg1.4xlarge',
-            
-            // High I/O
-            'hi1.4xlarge',
-            
-            'hs1.8xlarge', // High Storage
-            
-            # New compute instances
             'c3.large',
             'c3.xlarge',
             'c3.2xlarge',
             'c3.4xlarge',
             'c3.8xlarge',
             
-            # Latest compute instances
             'c4.large',
             'c4.xlarge',
             'c4.2xlarge',
             'c4.4xlarge',
-            'c4.8xlarge'
+            'c4.8xlarge',
+            
+            'c5.large',
+            'c5.xlarge',
+            'c5.2xlarge',
+            'c5.4xlarge',
+            'c5.9xlarge',
+            'c5.18xlarge',
+            
+            'c5d.large',
+            'c5d.xlarge',
+            'c5d.2xlarge',
+            'c5d.4xlarge',
+            'c5d.9xlarge',
+            'c5d.18xlarge',
+            
+            // istorage optimized
+            'i2.xlarge',
+            'i2.2xlarge',
+            'i2.4xlarge',
+            'i2.8xlarge',
+            
+            // High I/O
+            'hi1.4xlarge',
+            'hs1.8xlarge',
+            
+            // Cluster
+            'cc1.4xlarge',
+            'cc2.8xlarge',
+            'cg1.4xlarge',
         );
         
         if (!in_array($size, $allowedTypes))
