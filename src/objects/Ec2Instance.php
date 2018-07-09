@@ -21,7 +21,7 @@ class Ec2Instance
     private $m_ami_launch_index;
     private $m_product_codes;
     private $m_instance_type; # # e.g. t1.micro
-    private $m_launch_time; # unix timestamp
+    private $m_launch_time; # unix timestamp when ec2 instance deployed, not when started from stop
     private $m_placement;
     private $m_kernel_id;
     private $m_monitoring_state;
@@ -147,14 +147,27 @@ class Ec2Instance
         
         // These items were not in the request for RunInstances, however they may be in the
         // request for spot instances?
-        $ec2Instance->m_instance_lifecycle          = @$item['instanceLifecycle'];
-        $ec2Instance->m_spot_instance_request_id    = @$item['spotInstanceRequestId'];
-        $ec2Instance->m_tag_set                     = @$item['tagSet']; # this is an object that needs defining.
-        $ec2Instance->m_key_name                    = @$item['keyName'];
-        $ec2Instance->m_kernel_id                   = @$item['kernelId'];
-        $ec2Instance->m_ip_address                  = @$item['ipAddress'];
+        $ec2Instance->m_instance_lifecycle       = self::setIfSet($item, 'instanceLifecycle', null);
+        $ec2Instance->m_spot_instance_request_id = self::setIfSet($item, 'spotInstanceRequestId', null);
+        $ec2Instance->m_tag_set                  = self::setIfSet($item, 'tagSet', null); # this is an object that needs defining.
+        $ec2Instance->m_key_name                 = self::setIfSet($item, 'keyName', null);
+        $ec2Instance->m_kernel_id                = self::setIfSet($item, 'kernelId', null);
+        $ec2Instance->m_ip_address               = self::setIfSet($item, 'ipAddress', null);
         
         return $ec2Instance;
+    }
+    
+    
+    /**
+     * Helper function just to prevent undefined index warnings.
+     * @param array $inputArray - the array to get a value from
+     * @param mixed $index - index which may or may not be set in the array
+     * @param mixed $default - default value to return if not set
+     * @return mixed - the value from the array, or the default provided.
+     */
+    private static function setIfSet(array $inputArray, $index, $default)
+    {
+        return (isset($inputArray[$index])) ? $inputArray[$index] : $default;
     }
     
     
