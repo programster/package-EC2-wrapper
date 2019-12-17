@@ -54,8 +54,12 @@ class AwsRegion
     public static function create_ireland()
     {
         return self::create_EU_W1();
-        return $region;
     }
+    
+    public static function create_EU_W2()  { return new AwsRegion('eu-west-2'); }
+    public static function create_london() { return self::create_EU_W2(); }
+    public static function create_EU_W3()  { return new AwsRegion('eu-west-3'); }
+    public static function create_paris()  { return self::create_EU_W3(); }
     
     public static function create_APAC_SE1()
     {
