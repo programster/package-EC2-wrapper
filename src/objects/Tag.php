@@ -4,7 +4,7 @@
  * A tag object that goes within a TagSpecification.
  */
 
-namespace iRAP\Ec2Wrapper\Objects;
+namespace Programster\Ec2Wrapper\Objects;
 
 class Tag
 {

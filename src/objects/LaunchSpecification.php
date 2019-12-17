@@ -6,7 +6,7 @@
  * http://docs.aws.amazon.com/AWSSDKforPHP/latest/#m=AmazonEC2/request_spot_instances
  */
 
-namespace iRAP\Ec2Wrapper\Objects;
+namespace Programster\Ec2Wrapper\Objects;
 
 class LaunchSpecification
 {
@@ -35,7 +35,7 @@ class LaunchSpecification
      * @param String $imageId - the ID of the image we are going to launch
      * @param string $instanceName - optionally specify a name for the instance(s)
      */
-    public function __construct(\iRAP\Ec2Wrapper\Enums\Ec2InstanceType $instanceType, $imageId, $instanceName="")
+    public function __construct(\Programster\Ec2Wrapper\Enums\Ec2InstanceType $instanceType, $imageId, $instanceName="")
     {
         self::validateImageId($imageId);
         $this->m_instanceType = $instanceType;
@@ -46,7 +46,7 @@ class LaunchSpecification
             $nameTag = new Tag("Name", $instanceName);
             
             $tagSpecification = new TagSpecification(
-                \iRAP\Ec2Wrapper\Enums\ResourceType::createInstance(), 
+                \Programster\Ec2Wrapper\Enums\ResourceType::createInstance(), 
                 $nameTag
             );
             

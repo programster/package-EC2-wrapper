@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Enums;
+namespace Programster\Ec2Wrapper\Enums;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

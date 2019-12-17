@@ -4,7 +4,7 @@
  * A response for a DescribeInstances request.
  */
 
-namespace iRAP\Ec2Wrapper\Responses;
+namespace Programster\Ec2Wrapper\Responses;
 
 class CreateImageResponse extends AbstractResponse
 {

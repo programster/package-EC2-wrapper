@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /* 
  * A request to terminate a single or multiple instances.
@@ -55,10 +55,10 @@ class RequestTerminateInstance extends AbstractEc2Request
     }
     
     
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \Programster\Ec2Wrapper\Responses\AbstractResponse
     {
         $response = $ec2->terminateInstances($opt);
-        return new \iRAP\Ec2Wrapper\Responses\TerminateInstanceResponse($response);
+        return new \Programster\Ec2Wrapper\Responses\TerminateInstanceResponse($response);
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /*
  * Class for deploying on-demand instances.
@@ -34,7 +34,7 @@ class RequestRunInstances extends AbstractEc2Request
      * @param LaunchSpecification $launchSpecification - the launch specification of the request
      *                                                   refer to that object for details.
      */
-    public function __construct(\iRAP\Ec2Wrapper\Objects\LaunchSpecification $launchSpecification,
+    public function __construct(\Programster\Ec2Wrapper\Objects\LaunchSpecification $launchSpecification,
                                 $maxCount, 
                                 $minCount)
     {
@@ -129,10 +129,10 @@ class RequestRunInstances extends AbstractEc2Request
      * @param \Aws\Ec2\Ec2Client $ec2Client - the ec2 client (from sdk) that actaully makes the requst
      * @param array $options - the optional array to put into the request generated from this object.
      */
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2Client, array $options) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2Client, array $options) : \Programster\Ec2Wrapper\Responses\AbstractResponse
     {
         $response = $ec2Client->runInstances($options);
-        return new \iRAP\Ec2Wrapper\Responses\LaunchInstancesResponse($response);
+        return new \Programster\Ec2Wrapper\Responses\LaunchInstancesResponse($response);
     }
     
     

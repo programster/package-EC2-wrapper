@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Objects;
+namespace Programster\Ec2Wrapper\Objects;
 
 /* 
  * Class for representing Ebs volumes.

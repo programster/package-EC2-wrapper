@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /*
  * Class for spot instance requests.
@@ -35,10 +35,10 @@ class RequestSpotInstance extends AbstractEc2Request
      *                                                   refer to that object for details.
      * @param int $num_instances - the number of spot instances you wish to launch.
      */
-    public function __construct(\iRAP\Ec2Wrapper\Enums\AwsRegion $availability_zone, 
-                                \iRAP\Ec2Wrapper\Enums\SpotInstanceType $spot_instance_type, 
+    public function __construct(\Programster\Ec2Wrapper\Enums\AwsRegion $availability_zone, 
+                                \Programster\Ec2Wrapper\Enums\SpotInstanceType $spot_instance_type, 
                                 $price,
-                                \iRAP\Ec2Wrapper\Objects\LaunchSpecification $launch_specification,
+                                \Programster\Ec2Wrapper\Objects\LaunchSpecification $launch_specification,
                                 $num_instances)
     {
         self::validate_price($price);

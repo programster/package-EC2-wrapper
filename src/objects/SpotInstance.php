@@ -6,7 +6,7 @@
  * the single spot request that may have spawned multiple SpotInstances.
  */
 
-namespace iRAP\Ec2Wrapper\Objects;
+namespace Programster\Ec2Wrapper\Objects;
 
 class SpotInstance
 {

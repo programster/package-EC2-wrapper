@@ -4,7 +4,7 @@
  * A response for a DescribeInstances request.
  */
 
-namespace iRAP\Ec2Wrapper\Responses;
+namespace Programster\Ec2Wrapper\Responses;
 
 class DescribeInstancesResponse extends AbstractResponse
 {
@@ -22,7 +22,7 @@ class DescribeInstancesResponse extends AbstractResponse
             
             foreach ($instances as $instanceSetItem)
             {
-                $ec2Instance = \iRAP\Ec2Wrapper\Objects\Ec2Instance::createFromAwsItem($instanceSetItem);
+                $ec2Instance = \Programster\Ec2Wrapper\Objects\Ec2Instance::createFromAwsItem($instanceSetItem);
                 $this->m_instances[] = $ec2Instance;
             }
         }

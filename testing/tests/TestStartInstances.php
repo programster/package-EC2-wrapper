@@ -8,17 +8,17 @@ class TestStartInstances extends AbstractTest
     }
     
     
-    public function run(iRAP\Ec2Wrapper\Ec2Client $ec2client) 
+    public function run(Programster\Ec2Wrapper\Ec2Client $ec2client) 
     {
         $ec2Instance = TestHelper::deployStoppedInstance($ec2client);
         
         try 
         {
-            $startRequest = new \iRAP\Ec2Wrapper\Requests\RequestStartInstances(
+            $startRequest = new \Programster\Ec2Wrapper\Requests\RequestStartInstances(
                 array($ec2Instance->getInstanceId())
             );
             
-            /* @var $response iRAP\Ec2Wrapper\Responses\StopInstancesResponse */
+            /* @var $response Programster\Ec2Wrapper\Responses\StopInstancesResponse */
             $response = $ec2client->startInstances($startRequest);
             
             
@@ -34,12 +34,12 @@ class TestStartInstances extends AbstractTest
                     break;
                 }
                 
-                $newCopyOfInstance = \iRAP\Ec2Wrapper\Objects\Ec2Instance::createFromID(
+                $newCopyOfInstance = \Programster\Ec2Wrapper\Objects\Ec2Instance::createFromID(
                     $ec2Instance->getInstanceId(), 
                     $ec2client
                 );
                 
-                if ($newCopyOfInstance->getStateString() === \iRAP\Ec2Wrapper\Enums\Ec2State::STATE_STOPPED)
+                if ($newCopyOfInstance->getStateString() === \Programster\Ec2Wrapper\Enums\Ec2State::STATE_STOPPED)
                 {
                     $instanceStopped = true;
                 }

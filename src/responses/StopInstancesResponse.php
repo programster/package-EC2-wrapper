@@ -4,7 +4,7 @@
  * A response for a stop instances request.
  */
 
-namespace iRAP\Ec2Wrapper\Responses;
+namespace Programster\Ec2Wrapper\Responses;
 
 class StopInstancesResponse extends AbstractResponse
 {

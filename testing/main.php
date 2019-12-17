@@ -15,13 +15,13 @@ $classDirs = array(
 
 new \iRAP\Autoloader\Autoloader($classDirs);
 
-$ec2Client = new iRAP\Ec2Wrapper\Ec2Client(
+$ec2Client = new Programster\Ec2Wrapper\Ec2Client(
     API_KEY, 
     API_SECRET, 
-    \iRAP\Ec2Wrapper\Enums\AwsRegion::create_EU_W1()
+    \Programster\Ec2Wrapper\Enums\AwsRegion::create_EU_W1()
 );
 
-$tests = iRAP\CoreLibs\Filesystem::getDirContents(
+$tests = Programster\CoreLibs\Filesystem::getDirContents(
     $dir=__DIR__ . '/tests', 
     $recursive=true, 
     $includePath=false, 

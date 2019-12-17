@@ -5,7 +5,7 @@
  * Class to represent a ResourceType.
  */
 
-namespace iRAP\Ec2Wrapper\Enums;
+namespace Programster\Ec2Wrapper\Enums;
 
 class ResourceType
 {

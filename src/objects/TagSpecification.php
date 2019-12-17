@@ -6,14 +6,14 @@
  * but as you can see the documentation is not finished, making it hard to complete this.
  */
 
-namespace iRAP\Ec2Wrapper\Objects;
+namespace Programster\Ec2Wrapper\Objects;
 
 class TagSpecification
 {
     private $m_resourceType; # no idea what this is yet
     private $m_tags; # no idea what this is yet.
     
-    public function __construct(\iRAP\Ec2Wrapper\Enums\ResourceType $type, Tag ...$tags) 
+    public function __construct(\Programster\Ec2Wrapper\Enums\ResourceType $type, Tag ...$tags) 
     {
         if (count($tags) === 0)
         {

@@ -8,7 +8,7 @@ class TestDescribeInstances extends AbstractTest
     }
     
     
-    public function run(\iRAP\Ec2Wrapper\Ec2Client $ec2client) 
+    public function run(\Programster\Ec2Wrapper\Ec2Client $ec2client) 
     {
         $ec2Instance1 = TestHelper::createEc2Instance($ec2client);
         $ec2Instance2 = TestHelper::createEc2Instance($ec2client);

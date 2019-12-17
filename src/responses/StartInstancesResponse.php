@@ -4,7 +4,7 @@
  * A response for a start instances request
  */
 
-namespace iRAP\Ec2Wrapper\Responses;
+namespace Programster\Ec2Wrapper\Responses;
 
 class StartInstancesResponse extends AbstractResponse
 {

@@ -4,7 +4,7 @@
  * A response for a TerminateInstance request.
  */
 
-namespace iRAP\Ec2Wrapper\Responses;
+namespace Programster\Ec2Wrapper\Responses;
 
 class TerminateInstanceResponse extends AbstractResponse
 {

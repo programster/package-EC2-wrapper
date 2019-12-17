@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -53,7 +53,7 @@ abstract class AbstractEc2Request
      * request. 
      * @return CFResponse
      */
-    public final function send(\Aws\Ec2\Ec2Client $ec2Client) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
+    public final function send(\Aws\Ec2\Ec2Client $ec2Client) : \Programster\Ec2Wrapper\Responses\AbstractResponse
     {
         $opts = $this->getOptionsArray();
         

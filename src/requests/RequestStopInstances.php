@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /*
  * Class for stopping running ec2 instances.
@@ -57,10 +57,10 @@ class RequestStopInstances extends AbstractEc2Request
      * @param \Aws\Ec2\Ec2Client $ec2Client - the ec2 client (from sdk) that actaully makes the requst
      * @param array $options - the optional array to put into the request generated from this object.
      */
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2Client, array $options) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2Client, array $options) : \Programster\Ec2Wrapper\Responses\AbstractResponse
     {
         $response = $ec2Client->stopInstances($options);
-        return new \iRAP\Ec2Wrapper\Responses\StopInstancesResponse($response);
+        return new \Programster\Ec2Wrapper\Responses\StopInstancesResponse($response);
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -54,10 +54,10 @@ class RequestDescribeInstances extends AbstractEc2Request
      * @param array $opt - the optional parameters to be sent.
      * @return CFResponse $response
      */
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \Programster\Ec2Wrapper\Responses\AbstractResponse
     {
         $rawResponse = $ec2->describeInstances($opt);
-        return new \iRAP\Ec2Wrapper\Responses\DescribeInstancesResponse($rawResponse);
+        return new \Programster\Ec2Wrapper\Responses\DescribeInstancesResponse($rawResponse);
     }
     
     
@@ -74,10 +74,10 @@ class RequestDescribeInstances extends AbstractEc2Request
     
     /**
      * Set a filter for the instances we wish to retrieve.
-     * @param \iRAP\Ec2Wrapper\Objects\AmazonFilter $filter
+     * @param \Programster\Ec2Wrapper\Objects\AmazonFilter $filter
      * @return void.
      */
-    public function set_filter(\iRAP\Ec2Wrapper\Objects\AmazonFilter $filter)
+    public function set_filter(\Programster\Ec2Wrapper\Objects\AmazonFilter $filter)
     {
         $this->m_filters = $filter;
     }

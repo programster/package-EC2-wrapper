@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /* 
  * Object to cancel spot instance requests.
@@ -17,7 +17,7 @@ class RequestCancelSpotInstance extends AbstractEc2Request
      * @param AmazonRegion $region - the region the spot requests were made to.
      * @param mixed $spot_request_id - a single spot request id, or an array list of spot request ids.
      */
-    public function __construct(\iRAP\Ec2Wrapper\Enums\AwsRegion $region, $spot_request_id)
+    public function __construct(\Programster\Ec2Wrapper\Enums\AwsRegion $region, $spot_request_id)
     {
         $this->m_region     = $region;
         $this->m_request_id = $spot_request_id;

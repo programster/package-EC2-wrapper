@@ -4,7 +4,7 @@
  * This object represents an ec2 instance as described from a describeInstances request.
  */
 
-namespace iRAP\Ec2Wrapper\Objects;
+namespace Programster\Ec2Wrapper\Objects;
 
 class Ec2Instance
 {
@@ -54,7 +54,7 @@ class Ec2Instance
      * WARNING - this will run a request to describe the instance so it can be slow/sub-optimal
      * @param string $id
      */
-    public static function createFromID(string $id, \iRAP\Ec2Wrapper\Ec2Client $client) : Ec2Instance
+    public static function createFromID(string $id, \Programster\Ec2Wrapper\Ec2Client $client) : Ec2Instance
     {
         $response = $client->describeInstances(array($id));
         $instances = $response->getEc2Instances();
@@ -64,7 +64,7 @@ class Ec2Instance
             throw new Exception("Failed to load Ec2 instance: $id");
         }
         
-        return \iRAP\CoreLibs\ArrayLib::getFirstElement($instances);
+        return \Programster\CoreLibs\ArrayLib::getFirstElement($instances);
     }
     
     
@@ -81,7 +81,7 @@ class Ec2Instance
         $ec2Instance->m_instance_id                 = $item['InstanceId'];
         $ec2Instance->m_image_id                    = $item['ImageId'];
         $ec2Instance->m_instance_state_code         = intval($item['State']['Code']); # e.g 16 (running)
-        $ec2Instance->m_state                       = new \iRAP\Ec2Wrapper\Enums\Ec2State($item['State']['Name']); # e.g. running
+        $ec2Instance->m_state                       = new \Programster\Ec2Wrapper\Enums\Ec2State($item['State']['Name']); # e.g. running
         $ec2Instance->m_private_dns_name            = $item['PrivateDnsName'];
         $ec2Instance->m_dns_name                    = $item['PublicDnsName'];
         $ec2Instance->m_state_transition_reason     = $item['StateTransitionReason']; #unknown object
@@ -94,7 +94,7 @@ class Ec2Instance
         # It's odd, but the LaunchTime objects attributes are all lowercase unlike everything else.
         $ec2Instance->m_launch_time = strtotime((string)$item['LaunchTime']); # 2015-09-18 13:48:08
         
-        $ec2Instance->m_placement = \iRAP\Ec2Wrapper\Objects\Placement::createFromAwsApi($item['Placement']);
+        $ec2Instance->m_placement = \Programster\Ec2Wrapper\Objects\Placement::createFromAwsApi($item['Placement']);
         
         $ec2Instance->m_monitoring_state = $item['Monitoring']['State']; # e.g. "disabled"
         
@@ -173,25 +173,25 @@ class Ec2Instance
     
     /**
      * Terminate the instance
-     * @param \iRAP\Ec2Wrapper\Ec2Client $client
-     * @return \iRAP\Ec2Wrapper\Responses\TerminateInstanceResponse
+     * @param \Programster\Ec2Wrapper\Ec2Client $client
+     * @return \Programster\Ec2Wrapper\Responses\TerminateInstanceResponse
      */
-    public function terminate(\iRAP\Ec2Wrapper\Ec2Client $client) : \iRAP\Ec2Wrapper\Responses\TerminateInstanceResponse
+    public function terminate(\Programster\Ec2Wrapper\Ec2Client $client) : \Programster\Ec2Wrapper\Responses\TerminateInstanceResponse
     {
-        $terminationRequest = new \iRAP\Ec2Wrapper\Requests\RequestTerminateInstance($this->getInstanceId());
+        $terminationRequest = new \Programster\Ec2Wrapper\Requests\RequestTerminateInstance($this->getInstanceId());
         return $client->terminateInstances($terminationRequest);
     }
     
     
     /**
      * Stop the instance.
-     * @param \iRAP\Ec2Wrapper\Ec2Client $client
+     * @param \Programster\Ec2Wrapper\Ec2Client $client
      * @param bool $force
-     * @return \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+     * @return \Programster\Ec2Wrapper\Responses\StopInstancesResponse
      */
-    public function stop(\iRAP\Ec2Wrapper\Ec2Client $client, bool $force) : \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+    public function stop(\Programster\Ec2Wrapper\Ec2Client $client, bool $force) : \Programster\Ec2Wrapper\Responses\StopInstancesResponse
     {
-        $stopRequest = new \iRAP\Ec2Wrapper\Requests\RequestStopInstances(
+        $stopRequest = new \Programster\Ec2Wrapper\Requests\RequestStopInstances(
             array($this->m_instance_id), 
             $force
         );
@@ -202,13 +202,13 @@ class Ec2Instance
     
     /**
      * Start the instance.
-     * @param \iRAP\Ec2Wrapper\Ec2Client $client
+     * @param \Programster\Ec2Wrapper\Ec2Client $client
      * @param bool $force
-     * @return \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+     * @return \Programster\Ec2Wrapper\Responses\StopInstancesResponse
      */
-    public function start(\iRAP\Ec2Wrapper\Ec2Client $client) : \iRAP\Ec2Wrapper\Responses\StartInstancesResponse
+    public function start(\Programster\Ec2Wrapper\Ec2Client $client) : \Programster\Ec2Wrapper\Responses\StartInstancesResponse
     {
-        $startRequest = new \iRAP\Ec2Wrapper\Requests\RequestStopInstances([$this->m_instance_id]);
+        $startRequest = new \Programster\Ec2Wrapper\Requests\RequestStopInstances([$this->m_instance_id]);
         return $client->startInstances($startRequest);
     }
     
@@ -244,7 +244,7 @@ class Ec2Instance
     public function getDeploymentTime() { return $this->m_launch_time; }
     public function getTags()           { return $this->m_tags; }
     
-    public function getState() : \iRAP\Ec2Wrapper\Enums\Ec2State 
+    public function getState() : \Programster\Ec2Wrapper\Enums\Ec2State 
     { 
         return $this->m_state;    
     }

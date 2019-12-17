@@ -8,7 +8,7 @@ class TestCreateImage extends AbstractTest
     }
     
     
-    public function run(\iRAP\Ec2Wrapper\Ec2Client $ec2client) 
+    public function run(\Programster\Ec2Wrapper\Ec2Client $ec2client) 
     {
         $ec2Instance = TestHelper::createEc2Instance($ec2client);
         $imageName = time() . '-TestImage';
@@ -24,7 +24,7 @@ class TestCreateImage extends AbstractTest
                 $noReboot=true
             );
             
-            if (\iRAP\CoreLibs\StringLib::contains($response->getImageID(), "ami-"))
+            if (\Programster\CoreLibs\StringLib::contains($response->getImageID(), "ami-"))
             {
                 $this->m_passed = true;
             }

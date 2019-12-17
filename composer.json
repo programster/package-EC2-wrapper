@@ -1,35 +1,35 @@
 {
-    "name": "irap/ec2-wrapper",
+    "name": "programster/ec2-wrapper",
     "type": "library",
     "description": "Package for making it easier to work with AWS EC2.",
     "keywords": ["AWS","EC2"],
-    "homepage": "http://www.irap.org/",
+    "homepage": "https://github.com/programster/package-EC2-wrapper",
     "license": "MIT",
     "authors": [
         {
             "name": "Stuart Page",
-            "email": "support@irap.org",
-            "homepage": "https://github.com/iRAP-software/package-EC2-wrapper",
+            "email": "sdpagent@gmail.com",
+            "homepage": "https://blog.programster.org",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.2.0",
         "aws/aws-sdk-php" : "3.62.*",
         "ext-libxml" : "*",
         "ext-simplexml" : "*"
     },
     "require-dev": {
         "irap/autoloader": "^1.0",
-        "irap/core-libs": "^1.1"
+        "programster/core-libs": "^1.5"
     },
     "autoload": {
         "psr-4": {
-            "iRAP\\Ec2Wrapper\\": "src/",
-            "iRAP\\Ec2Wrapper\\Enums\\": "src/enums/",
-            "iRAP\\Ec2Wrapper\\Objects\\": "src/objects/",
-            "iRAP\\Ec2Wrapper\\Requests\\": "src/requests/",
-            "iRAP\\Ec2Wrapper\\Responses\\": "src/responses/"
+            "Programster\\Ec2Wrapper\\": "src/",
+            "Programster\\Ec2Wrapper\\Enums\\": "src/enums/",
+            "Programster\\Ec2Wrapper\\Objects\\": "src/objects/",
+            "Programster\\Ec2Wrapper\\Requests\\": "src/requests/",
+            "Programster\\Ec2Wrapper\\Responses\\": "src/responses/"
         }
     }
 }

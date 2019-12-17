@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Enums;
+namespace Programster\Ec2Wrapper\Enums;
 
 /* 
  * An object to represent the type of an EC2 Instance. 
@@ -63,7 +63,7 @@ class Ec2InstanceType
      *  6 - 96 vcpu 345 ECU  384 GiB Ram
      * 
      * @param bool $addNvme - whether to deploy an instance with local nvme storate (m5d)
-     * @return \iRAP\Ec2Wrapper\Enums\Ec2InstanceType
+     * @return \Programster\Ec2Wrapper\Enums\Ec2InstanceType
      * @throws \Exception if size is not within range.
      */
     public static function createGeneralPurposeNew($size, bool $addNvme) : Ec2InstanceType
@@ -358,7 +358,7 @@ class Ec2InstanceType
      *                    Each step in size doubles the compute capability and price.
      * @param bool $includeLocalNvmeStorage - if true, will deploy a c5d instance instead of a c5
      *                                        which is a little more but has local NVME storage.
-     * @return \iRAP\Ec2Wrapper\Enums\Ec2InstanceType
+     * @return \Programster\Ec2Wrapper\Enums\Ec2InstanceType
      * @throws \Exception if $size provided was not an allowed value.
      */
     public static function createNewHighCpu(int $size, bool $includeLocalNvmeStorage) : Ec2InstanceType

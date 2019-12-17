@@ -6,13 +6,13 @@
  * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html
  */
 
-namespace iRAP\Ec2Wrapper;
+namespace Programster\Ec2Wrapper;
 
 class Ec2Client
 {
     private $m_client;
     
-    public function __construct(string $apiKey, string $apiSecret, \iRAP\Ec2Wrapper\Enums\AwsRegion $region)
+    public function __construct(string $apiKey, string $apiSecret, \Programster\Ec2Wrapper\Enums\AwsRegion $region)
     {
         $credentials = array(
             'key'    => $apiKey,
@@ -66,7 +66,7 @@ class Ec2Client
      * Describe the specified instances, or get info on all instances if no instance IDs are provided.
      * @param array $instanceIds - array of instance IDs to describe. If empty all instances returned.
      * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#describeinstances
-     * @return \iRAP\Ec2Wrapper\Responses\DescribeInstancesResponse
+     * @return \Programster\Ec2Wrapper\Responses\DescribeInstancesResponse
      */
     public function describeInstances(array $instanceIds=array()) : Responses\DescribeInstancesResponse
     {
@@ -88,7 +88,7 @@ class Ec2Client
     /**
      * Alias for runInstances() 
      * Launch some on demand instances (fixed price).
-     * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
+     * @param \Programster\Ec2Wrapper\Requests\RequestRunInstances $request
      * @return type
      */
     public function deployInstances(Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
@@ -100,7 +100,7 @@ class Ec2Client
     /**
      * Alias for runInstances() 
      * Launch some on demand instances (fixed price).
-     * @param \iRAP\Ec2Wrapper\Requests\RequestRunInstances $request
+     * @param \Programster\Ec2Wrapper\Requests\RequestRunInstances $request
      * @return type
      */
     public function launchInstances(Requests\RequestRunInstances $request) : Responses\LaunchInstancesResponse
@@ -120,8 +120,8 @@ class Ec2Client
     
     /**
      * Send a request to start some stopped instances.
-     * @param \iRAP\Ec2Wrapper\Requests\RequestStartInstances $request
-     * @return \iRAP\Ec2Wrapper\Responses\StartInstancesResponse
+     * @param \Programster\Ec2Wrapper\Requests\RequestStartInstances $request
+     * @return \Programster\Ec2Wrapper\Responses\StartInstancesResponse
      */
     public function startInstances(Requests\RequestStartInstances $request) : Responses\StartInstancesResponse
     {
@@ -132,8 +132,8 @@ class Ec2Client
     /**
      * Send a request to stop some EC2 instances.
      * Refer to https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2016-11-15.html#stopinstances
-     * @param \iRAP\Ec2Wrapper\Requests\RequestStopInstances $request
-     * @return \iRAP\Ec2Wrapper\Responses\StopInstancesResponse
+     * @param \Programster\Ec2Wrapper\Requests\RequestStopInstances $request
+     * @return \Programster\Ec2Wrapper\Responses\StopInstancesResponse
      */
     public function stopInstances(Requests\RequestStopInstances $request) : Responses\StopInstancesResponse
     {
@@ -144,10 +144,10 @@ class Ec2Client
     /**
      * Send a request to terminate instances.
      * http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ec2-2015-04-15.html#terminateinstances
-     * @param \iRAP\Ec2Wrapper\Requests\RequestTerminateInstance $request
+     * @param \Programster\Ec2Wrapper\Requests\RequestTerminateInstance $request
      * @return \Aws\Result
      */
-    public function terminateInstances(\iRAP\Ec2Wrapper\Requests\RequestTerminateInstance $request)
+    public function terminateInstances(\Programster\Ec2Wrapper\Requests\RequestTerminateInstance $request)
     {
         return $request->send($this->m_client);
     }

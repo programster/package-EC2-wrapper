@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 /* 
  * The request to retrieve information about spot instances.
@@ -26,7 +26,7 @@ class RequestDescribeSpotInstances extends AbstractEc2Request
      *                                This can be a string representing a single instance, or an
      *                                array list of instances.
      */
-    public function __construct(\iRAP\Ec2Wrapper\Enums\AwsRegion $region, $spot_instance_id=array())
+    public function __construct(\Programster\Ec2Wrapper\Enums\AwsRegion $region, $spot_instance_id=array())
     {
         $this->m_region = $region;
         
@@ -55,9 +55,9 @@ class RequestDescribeSpotInstances extends AbstractEc2Request
     
     /**
      * Set a filter for this request for a "search" rather than fetching everything.
-     * @param \iRAP\Ec2Wrapper\Objects\AmazonFilter $filter
+     * @param \Programster\Ec2Wrapper\Objects\AmazonFilter $filter
      */
-    public function setFilter(\iRAP\Ec2Wrapper\Objects\AmazonFilter $filter)
+    public function setFilter(\Programster\Ec2Wrapper\Objects\AmazonFilter $filter)
     {
         $this->m_filter = $filter;
     }

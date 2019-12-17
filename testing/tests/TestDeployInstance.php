@@ -12,18 +12,18 @@ class TestDeployInstance extends AbstractTest
     }
     
     
-    public function run(\iRAP\Ec2Wrapper\Ec2Client $ec2client)
+    public function run(\Programster\Ec2Wrapper\Ec2Client $ec2client)
     {
         $ubuntuImage = 'ami-cc166eb5';
         $numInstancesToLaunch = 3;
         
-        $launchSpecification = new \iRAP\Ec2Wrapper\Objects\LaunchSpecification(
-            \iRAP\Ec2Wrapper\Enums\Ec2InstanceType::createT2(1), 
+        $launchSpecification = new \Programster\Ec2Wrapper\Objects\LaunchSpecification(
+            \Programster\Ec2Wrapper\Enums\Ec2InstanceType::createT2(1), 
             $ubuntuImage,
             "My Instance Name"
         );
         
-        $request = new iRAP\Ec2Wrapper\Requests\RequestRunInstances(
+        $request = new Programster\Ec2Wrapper\Requests\RequestRunInstances(
             $launchSpecification, 
             $numInstancesToLaunch, 
             $numInstancesToLaunch
@@ -47,7 +47,7 @@ class TestDeployInstance extends AbstractTest
         // cleanup
         foreach ($launchResponse->getEc2Instances() as $instance)
         {
-            /* @var $instance \iRAP\Ec2Wrapper\Objects\Ec2Instance */
+            /* @var $instance \Programster\Ec2Wrapper\Objects\Ec2Instance */
             $instance->terminate($ec2client);
         }
     }

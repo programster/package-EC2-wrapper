@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Enums;
+namespace Programster\Ec2Wrapper\Enums;
 
 /* 
  * This is an 'enum' representing the regions in amazon.

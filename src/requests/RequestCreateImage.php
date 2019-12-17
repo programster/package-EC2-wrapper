@@ -5,7 +5,7 @@
  */
 
 
-namespace iRAP\Ec2Wrapper\Requests;
+namespace Programster\Ec2Wrapper\Requests;
 
 class RequestCreateImage extends AbstractEc2Request
 {
@@ -33,9 +33,9 @@ class RequestCreateImage extends AbstractEc2Request
     /**
      * Optionally specify the block devices that you want in the AMI. 
      * Without this, we will just snapshot all block devices.
-     * @param \iRAP\Ec2Wrapper\Objects\BlockDevice $blockDevice
+     * @param \Programster\Ec2Wrapper\Objects\BlockDevice $blockDevice
      */
-    public function addBlockDevice(\iRAP\Ec2Wrapper\Objects\BlockDevice $blockDevice)
+    public function addBlockDevice(\Programster\Ec2Wrapper\Objects\BlockDevice $blockDevice)
     {
         $this->m_blockDevices = $blockDevice;
     }
@@ -62,7 +62,7 @@ class RequestCreateImage extends AbstractEc2Request
             
             foreach ($this->m_blockDevices as $blockDevice)
             {
-                /* @var $blockDevice iRAP\Ec2Wrapper\Objects\BlockDevice */
+                /* @var $blockDevice Programster\Ec2Wrapper\Objects\BlockDevice */
                 $options['BlockDeviceMappings'][] = $blockDevice->toArray();
             }
         }
@@ -71,7 +71,7 @@ class RequestCreateImage extends AbstractEc2Request
     }
     
     
-    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \iRAP\Ec2Wrapper\Responses\AbstractResponse
+    protected function sendRequest(\Aws\Ec2\Ec2Client $ec2, array $opt) : \Programster\Ec2Wrapper\Responses\AbstractResponse
     {
         try
         {
@@ -79,9 +79,9 @@ class RequestCreateImage extends AbstractEc2Request
         } 
         catch (\Aws\Ec2\Exception\Ec2Exception $ex) 
         {
-            return \iRAP\Ec2Wrapper\Responses\CreateImageResponse::createFromException($ex);
+            return \Programster\Ec2Wrapper\Responses\CreateImageResponse::createFromException($ex);
         }
         
-        return new \iRAP\Ec2Wrapper\Responses\CreateImageResponse($rawResponse);
+        return new \Programster\Ec2Wrapper\Responses\CreateImageResponse($rawResponse);
     }
 }

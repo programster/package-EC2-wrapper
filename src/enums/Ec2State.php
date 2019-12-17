@@ -1,6 +1,6 @@
 <?php
 
-namespace iRAP\Ec2Wrapper\Enums;
+namespace Programster\Ec2Wrapper\Enums;
 
 /*
  * A class to act as an ENUM for all the possible states an EC2 instance can be in.
